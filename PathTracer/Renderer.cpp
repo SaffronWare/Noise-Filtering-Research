@@ -23,25 +23,25 @@ HitInfo Renderer::getHit(Ray ray)
 	return  bestHit;
 }
 
-glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, int stepNum)
+glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, unsigned int stepNum)
 {
 	if (stepNum >= Renderer::config.max_steps)
 	{
-		return glm::vec3();
+		return glm::vec3(1,1,1);
 	}
 
 	HitInfo hit = Renderer::getHit(negIncomingRay);
 
 	if (!hit.hit)
 	{
-		return glm::vec3();
+		return glm::vec3(1,1,1);
 	}
 
 	glm::vec3 reflected_dir = glm::reflect(negIncomingRay.direction, hit.n);
 	glm::vec3 reflected_pos = negIncomingRay.position + Renderer::config.hit_tolerance * hit.n;
 
 	
-	return hit.mat.albedo * Renderer::getIncomingLight(Ray{ reflected_pos, reflected_dir }, stepNum + 1);
+	return hit.mat.albedo * Renderer::getIncomingLight(Ray{ reflected_pos, reflected_dir }, stepNum + 1) + hit.mat.emission;
 }
 
 glm::vec3 Renderer::colorAtUV(glm::vec2 uv)
@@ -49,7 +49,7 @@ glm::vec3 Renderer::colorAtUV(glm::vec2 uv)
 	glm::vec3 ray_pos = Renderer::config.scene.value()->camera.position;
 	glm::vec3 ray_dir = glm::normalize(Renderer::config.scene.value()->camera.getPixelv(uv) - ray_pos);
 
-	return Renderer::getIncomingLight(Ray{ ray_pos, ray_dir }, Renderer::config.max_steps);
+	return Renderer::getIncomingLight(Ray{ ray_pos, ray_dir }, 0u);
 }
 
 Renderer::RenderOutput Renderer::render()
@@ -73,9 +73,9 @@ Renderer::RenderOutput Renderer::render()
 	uv.x = -0.5f * off * static_cast<float>(Renderer::config.resolution_x);
 	uv.y = -0.5f;
 
-	for (int i = 0; i < Renderer::config.resolution_x; i++)
+	for (int j = 0; j < Renderer::config.resolution_y; j++)
 	{
-		for (int j = 0; j < Renderer::config.resolution_y; j++)
+		for (int i = 0; i < Renderer::config.resolution_x; i++)
 		{
 			glm::vec3 IncomingLight = glm::clamp(Renderer::colorAtUV(uv), 0.0f, 1.0f);
 
@@ -84,9 +84,9 @@ Renderer::RenderOutput Renderer::render()
 			output.data[output_index + 2] = IncomingLight.z;
 			output_index += 3;
 
-			uv.y += off;
+			uv.x += off;
 		}
-		uv.x += off;
+		uv.y += off;
 	}
 
 	return output;

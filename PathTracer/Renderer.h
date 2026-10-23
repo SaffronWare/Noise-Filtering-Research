@@ -37,7 +37,7 @@ namespace Renderer
 
 	HitInfo getHit(Ray ray);
 
-	glm::vec3 getIncomingLight(Ray negIncomingRay, int stepNum);
+	glm::vec3 getIncomingLight(Ray negIncomingRay, unsigned int stepNum);
 	glm::vec3 colorAtUV(glm::vec2 uv);
 
 	RenderOutput render();

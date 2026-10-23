@@ -7,6 +7,7 @@
 struct Material
 {
 	glm::vec3 albedo;
+	glm::vec3 emission;
 };
 
 struct HitInfo
