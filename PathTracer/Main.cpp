@@ -1,7 +1,7 @@
 ﻿#include <glm/glm.hpp>
 #include <iostream>
 
-#include "Scene.h"
+#include "Renderer.h"
 
 int main()
 {
@@ -17,8 +17,9 @@ int main()
 	
 	scene.objects.push_back(&testSphere);
 
-
-
+	Renderer::config.scene.emplace(&scene);
+	
+	Renderer::render();
 
 	return 0;
 }

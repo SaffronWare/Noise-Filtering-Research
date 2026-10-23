@@ -1,0 +1,94 @@
+#include "Renderer.h"
+
+Renderer::RenderConfig Renderer::config = Renderer::RenderConfig{};
+
+HitInfo Renderer::getHit(Ray ray)
+{
+	HitInfo bestHit{};
+	bestHit.hit = false;
+
+	HitInfo currHit;
+	for (Object*& pObj : Renderer::config.scene.value()->objects)
+	{
+		currHit = pObj->getHit(ray);
+		if (currHit.hit && currHit.dist > Renderer::config.hit_tolerance)
+		{
+			if (not bestHit.hit || currHit.hit < bestHit.hit)
+			{
+				bestHit = currHit;
+			}
+		}
+	}
+
+	return  bestHit;
+}
+
+glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, int stepNum)
+{
+	if (stepNum >= Renderer::config.max_steps)
+	{
+		return glm::vec3();
+	}
+
+	HitInfo hit = Renderer::getHit(negIncomingRay);
+
+	if (!hit.hit)
+	{
+		return glm::vec3();
+	}
+
+	glm::vec3 reflected_dir = glm::reflect(negIncomingRay.direction, hit.n);
+	glm::vec3 reflected_pos = negIncomingRay.position + Renderer::config.hit_tolerance * hit.n;
+
+	
+	return hit.mat.albedo * Renderer::getIncomingLight(Ray{ reflected_pos, reflected_dir }, stepNum + 1);
+}
+
+glm::vec3 Renderer::colorAtUV(glm::vec2 uv)
+{
+	glm::vec3 ray_pos = Renderer::config.scene.value()->camera.position;
+	glm::vec3 ray_dir = glm::normalize(Renderer::config.scene.value()->camera.getPixelv(uv) - ray_pos);
+
+	return Renderer::getIncomingLight(Ray{ ray_pos, ray_dir }, Renderer::config.max_steps);
+}
+
+Renderer::RenderOutput Renderer::render()
+{
+
+	Renderer::RenderOutput output{};
+
+	if (!Renderer::config.scene.has_value())
+	{
+		return output;
+	}
+
+	output.resolution_x = Renderer::config.resolution_x;
+	output.resolution_y = Renderer::config.resolution_y;
+	output.data = std::make_unique<float[]>(output.resolution_x * output.resolution_y * 3);
+
+	int output_index = 0;
+
+	glm::vec2 uv;
+	float off = 1.0f / (static_cast<float>(Renderer::config.resolution_y));
+	uv.x = -0.5f * off * static_cast<float>(Renderer::config.resolution_x);
+	uv.y = -0.5f;
+
+	for (int i = 0; i < Renderer::config.resolution_x; i++)
+	{
+		for (int j = 0; j < Renderer::config.resolution_y; j++)
+		{
+			glm::vec3 IncomingLight = glm::clamp(Renderer::colorAtUV(uv), 0.0f, 1.0f);
+
+			output.data[output_index] = IncomingLight.x;
+			output.data[output_index + 1] = IncomingLight.y;
+			output.data[output_index + 2] = IncomingLight.z;
+			output_index += 3;
+
+			uv.y += off;
+		}
+		uv.x += off;
+	}
+
+	return output;
+}
+
