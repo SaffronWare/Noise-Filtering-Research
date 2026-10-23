@@ -4,6 +4,11 @@
 
 #include "Ray.h"
 
+struct Material
+{
+	glm::vec3 albedo;
+};
+
 struct HitInfo
 {	glm::vec3 p;
 	glm::vec3 n;
@@ -14,10 +19,6 @@ struct HitInfo
 	bool hit;
 };
 
-struct Material
-{
-	glm::vec3 albedo;
-};
 
 struct Object
 {

@@ -6,8 +6,8 @@ HitInfo Sphere::getHit(Ray ray)
 {
 
 	glm::vec3 diff = (ray.position - position);
-	float a = 1.0;
-	float b = 2.0 * glm::dot(diff, ray.direction);
+	float a = 1.0f;
+	float b = 2.0f * glm::dot(diff, ray.direction);
 	float c = glm::dot(diff, diff) -  radius * radius;
 
 	float d = b * b - 4 * a * c;

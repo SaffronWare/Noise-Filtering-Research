@@ -7,7 +7,7 @@
 struct Camera
 {
 private:
-	glm::mat3 orientation;
+	glm::mat3 orientation = glm::mat3{glm::vec3(1,0,0), glm::vec3(0,1,0), glm::vec3(0,0,-1)};
 
 public:
 	glm::vec3 position;
