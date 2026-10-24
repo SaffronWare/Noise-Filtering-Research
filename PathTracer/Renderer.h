@@ -2,6 +2,8 @@
 #include <memory>
 #include <string>
 #include <optional>
+#include <stdexcept>
+#include <iostream>
 
 #include "Scene.h"
 

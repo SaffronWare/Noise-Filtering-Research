@@ -17,7 +17,7 @@ HitInfo Sphere::getHit(Ray ray)
 
 	if (d == 0)
 	{
-		float t = -b / (2 * a);
+		t = -b / (2 * a);
 
 
 	}

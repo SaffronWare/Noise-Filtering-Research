@@ -13,7 +13,7 @@ HitInfo Renderer::getHit(Ray ray)
 		currHit = pObj->getHit(ray);
 		if (currHit.hit && currHit.dist > Renderer::config.hit_tolerance)
 		{
-			if (not bestHit.hit || currHit.hit < bestHit.hit)
+			if (!bestHit.hit || currHit.hit < bestHit.hit)
 			{
 				bestHit = currHit;
 			}
@@ -46,10 +46,8 @@ glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, unsigned int stepNum)
 
 glm::vec3 Renderer::colorAtUV(glm::vec2 uv)
 {
-	glm::vec3 ray_pos = Renderer::config.scene.value()->camera.position;
-	glm::vec3 ray_dir = glm::normalize(Renderer::config.scene.value()->camera.getPixelv(uv) - ray_pos);
-
-	return Renderer::getIncomingLight(Ray{ ray_pos, ray_dir }, 0u);
+	Ray ray = Renderer::config.scene.value()->camera.shootRay(uv);
+	return Renderer::getIncomingLight(ray, 0u);
 }
 
 Renderer::RenderOutput Renderer::render()
@@ -59,6 +57,7 @@ Renderer::RenderOutput Renderer::render()
 
 	if (!Renderer::config.scene.has_value())
 	{
+		std::cerr << "MISSING SCENE SPECIFICATION IN RENDER CONFIG! FAILED TO RENDER\n";
 		return output;
 	}
 
@@ -87,6 +86,7 @@ Renderer::RenderOutput Renderer::render()
 			uv.x += off;
 		}
 		uv.y += off;
+		uv.x = -0.5f * off * static_cast<float>(Renderer::config.resolution_x);
 	}
 
 	return output;
