@@ -43,3 +43,12 @@ HitInfo Sphere::getHit(Ray ray)
 		return HitInfo{ ray.pointAt(t), glm::normalize(ray.pointAt(t) - position), mat, t, true };
 	}
 }
+
+
+
+glm::vec3 Material::BRDF(glm::vec3 lightDir, glm::vec3 irrDir, glm::vec3 n)
+{
+	float FD90 = 0.5f + 2 * roughness * glm::abs(glm::dot(irrDir, n))
+
+	float Material::fD(glm::vec3)
+}
