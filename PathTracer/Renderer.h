@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "Scene.h"
+#include "utils.h"
 
 
 namespace Renderer
@@ -19,9 +20,9 @@ namespace Renderer
 
 		float hit_tolerance = 0.001f;
 
-		unsigned int max_steps = 1u;
+		unsigned int max_steps = 20u;
 		unsigned int num_samples_per_pixel = 1u;
-		unsigned int num_samples_per_trace = 1u;
+		unsigned int num_samples_per_trace = 100u;
 	};
 
 	struct RenderOutput

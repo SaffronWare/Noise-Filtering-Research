@@ -42,17 +42,19 @@ glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, unsigned int stepNum)
 		hit.n *= -1.0f;
 	}
 
-	glm::vec3 OutgoingRadiance = hit.mat.emission;
+	glm::vec3 OutgoingRadiance = hit.mat.emissionColor;
 
 	for (int i = 0; i < Renderer::config.num_samples_per_trace; i++)
 	{
 
-		glm::vec3 reflected_dir = glm::reflect(negIncomingRay.direction, hit.n);
+		glm::vec3 reflected_dir = Utils::randomOnHemisphere(hit.n);
 		glm::vec3 reflected_pos = negIncomingRay.position + Renderer::config.hit_tolerance * hit.n;
 
-		OutgoingRadiance += hit.mat.BRDF(reflected_dir, -negIncomingRay.direction) *
-			Renderer::getIncomingLight(Ray{ reflected_pos, reflected_dir }, stepNum + 1) * glm::dot(reflected_dir, hit.n);
+		OutgoingRadiance += hit.mat.BRDF(reflected_dir, -negIncomingRay.direction, hit.n) 
+			* Renderer::getIncomingLight(Ray{ reflected_pos, reflected_dir }, stepNum + 1) * glm::dot(reflected_dir, hit.n);
 	}
+
+	return OutgoingRadiance / (float)Renderer::config.num_samples_per_trace;
 }
 
 glm::vec3 Renderer::colorAtUV(glm::vec2 uv)

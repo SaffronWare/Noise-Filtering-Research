@@ -14,11 +14,13 @@ int main()
 	Sphere testSphere{};
 	testSphere.radius = 1.0f;
 	testSphere.position = glm::vec3(0, 0, -3);
-	testSphere.mat.albedo = glm::vec3(1, 0, 0);
-	testSphere.mat.emission = glm::vec3(0, 0, 0);
+	testSphere.mat.baseColor = glm::vec3(1, 0, 0);
+	testSphere.mat.emissionColor = glm::vec3(0, 0, 0);
 
 	
 	scene.objects.push_back(&testSphere);
+
+
 
 	Renderer::config.scene.emplace(&scene);
 	

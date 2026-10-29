@@ -4,6 +4,7 @@
 
 #include "Ray.h"
 
+
 struct Material
 {
 	float roughness = 1.0f;
