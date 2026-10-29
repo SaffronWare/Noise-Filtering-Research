@@ -48,7 +48,14 @@ HitInfo Sphere::getHit(Ray ray)
 
 glm::vec3 Material::BRDF(glm::vec3 lightDir, glm::vec3 irrDir, glm::vec3 n)
 {
-	float FD90 = 0.5f + 2 * roughness * glm::abs(glm::dot(irrDir, n))
+	glm::vec3 h = glm::normalize(lightDir + irrDir);
 
-	float Material::fD(glm::vec3)
+	float FD90 = 0.5f + 2 * roughness * glm::abs(glm::dot(irrDir, n));
+
+	float FDin = (1 + (FD90 - 1) * glm::pow(1 - glm::dot(irrDir, n), 5.0f));
+	float FDout = (1 + (FD90 - 1) * glm::pow(1 - glm::dot(lightDir, n), 5.0f));
+
+	glm::vec3 BaseDiffuse = FDin * FDout * glm::abs(glm::dot(irrDir, n)) * baseColor / std::acosf(-1.0f);
+	
+	return BaseDiffuse;
 }
