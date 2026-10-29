@@ -8,6 +8,7 @@
 struct Material
 {
 	float roughness = 1.0f;
+	float emissionStrength = 0.0f;
 
 	glm::vec3 emissionColor;
 	glm::vec3 baseColor;
@@ -36,6 +37,14 @@ struct Sphere : public Object
 {
 	glm::vec3 position;
 	float radius;
+
+	HitInfo getHit(Ray ray) override;
+};
+
+struct Plane : public Object
+{
+	glm::vec3 position;
+	glm::vec3 normal;
 
 	HitInfo getHit(Ray ray) override;
 };

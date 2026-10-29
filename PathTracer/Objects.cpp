@@ -36,13 +36,35 @@ HitInfo Sphere::getHit(Ray ray)
 
 	if (t <= 0.0f)
 	{
-		return HitInfo{ glm::vec3(), glm::vec3(), Material{}, -1, 1 };
+		return HitInfo{ glm::vec3(), glm::vec3(), Material{}, -1, false };
 	}
 	else
 	{
 		return HitInfo{ ray.pointAt(t), glm::normalize(ray.pointAt(t) - position), mat, t, true };
 	}
 }
+
+
+HitInfo Plane::getHit(Ray ray)
+{
+	// need (dt + o - p) * n = 0
+	//(d*n)t - (p-0)n = 0
+	//t = (p-o)*n/(d*n)
+	float dn = glm::dot(ray.direction, normal);
+	if (glm::abs(dn) <= 0.00001)
+	{
+		return HitInfo{ glm::vec3(), glm::vec3(), Material{}, -1, false };
+	}
+
+	float t = glm::dot(position - ray.position, normal) / dn;
+	if (t <= 0)
+	{
+		return HitInfo{ glm::vec3(), glm::vec3(), Material{}, -1, false };
+	}
+
+	return HitInfo{ ray.pointAt(t), normal, mat, t, true };
+}
+
 
 
 
@@ -55,7 +77,8 @@ glm::vec3 Material::BRDF(glm::vec3 lightDir, glm::vec3 irrDir, glm::vec3 n)
 	float FDin = (1 + (FD90 - 1) * glm::pow(1 - glm::dot(irrDir, n), 5.0f));
 	float FDout = (1 + (FD90 - 1) * glm::pow(1 - glm::dot(lightDir, n), 5.0f));
 
-	glm::vec3 BaseDiffuse = FDin * FDout * glm::abs(glm::dot(irrDir, n)) * baseColor / std::acosf(-1.0f);
+	glm::vec3 BaseDiffuse = FDin * FDout * glm::pow(glm::abs(glm::dot(irrDir, h)),2.0f) * baseColor / std::acosf(-1.0f);
 	
+	//return baseColor;
 	return BaseDiffuse;
 }

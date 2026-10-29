@@ -13,7 +13,7 @@ HitInfo Renderer::getHit(Ray ray)
 		currHit = pObj->getHit(ray);
 		if (currHit.hit && currHit.dist > Renderer::config.hit_tolerance)
 		{
-			if (!bestHit.hit || currHit.hit < bestHit.hit)
+			if (!bestHit.hit || currHit.dist < bestHit.dist)
 			{
 				bestHit = currHit;
 			}
@@ -27,14 +27,14 @@ glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, unsigned int stepNum)
 {
 	if (stepNum >= Renderer::config.max_steps)
 	{
-		return glm::vec3(1, 1, 1);
+		return glm::vec3(0, 0, 0);
 	}
 
 	HitInfo hit = Renderer::getHit(negIncomingRay);
 
 	if (!hit.hit)
 	{
-		return glm::vec3(1, 1, 1);
+		return glm::vec3(0, 0, 0);
 	}
 
 	if (glm::dot(hit.n, negIncomingRay.direction) > 0)
@@ -42,13 +42,13 @@ glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, unsigned int stepNum)
 		hit.n *= -1.0f;
 	}
 
-	glm::vec3 OutgoingRadiance = hit.mat.emissionColor;
+	glm::vec3 OutgoingRadiance = hit.mat.emissionColor * hit.mat.emissionStrength;
 
 	for (int i = 0; i < Renderer::config.num_samples_per_trace; i++)
 	{
 
 		glm::vec3 reflected_dir = Utils::randomOnHemisphere(hit.n);
-		glm::vec3 reflected_pos = negIncomingRay.position + Renderer::config.hit_tolerance * hit.n;
+		glm::vec3 reflected_pos = hit.p + Renderer::config.hit_tolerance * hit.n;
 
 		OutgoingRadiance += hit.mat.BRDF(reflected_dir, -negIncomingRay.direction, hit.n) 
 			* Renderer::getIncomingLight(Ray{ reflected_pos, reflected_dir }, stepNum + 1) * glm::dot(reflected_dir, hit.n);
@@ -85,15 +85,23 @@ Renderer::RenderOutput Renderer::render()
 	uv.x = -0.5f * off * static_cast<float>(Renderer::config.resolution_x);
 	uv.y = -0.5f;
 
+
+//#pragma omp parallel for collapse(2)
 	for (int j = 0; j < Renderer::config.resolution_y; j++)
 	{
 		for (int i = 0; i < Renderer::config.resolution_x; i++)
 		{
-			glm::vec3 IncomingLight = glm::clamp(Renderer::colorAtUV(uv), 0.0f, 1.0f);
+			glm::vec3 incomingLight = glm::vec3();
+			for (int k = 0; k < Renderer::config.num_samples_per_pixel; k++)
+			{
+				incomingLight += Renderer::colorAtUV(uv);
+			}
 
-			output.data[output_index] = IncomingLight.x;
-			output.data[output_index + 1] = IncomingLight.y;
-			output.data[output_index + 2] = IncomingLight.z;
+			incomingLight = glm::clamp(incomingLight / (float)Renderer::config.num_samples_per_pixel, 0.0f, 1.0f);
+
+			output.data[output_index] = incomingLight.x;
+			output.data[output_index + 1] = incomingLight.y;
+			output.data[output_index + 2] = incomingLight.z;
 			output_index += 3;
 
 			uv.x += off;

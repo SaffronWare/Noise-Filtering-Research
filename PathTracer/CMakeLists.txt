@@ -2,6 +2,8 @@
 # project specific logic here.
 #
 
+find_package(OpenMP REQUIRED)
+
 # Add source to this project's executable.
 add_executable (PathTracer "Main.cpp"  "Ray.h" "Ray.cpp" "Camera.h" "Camera.cpp" "Objects.h" "Objects.cpp" "Scene.h" "Renderer.h" "Renderer.cpp" "Export.h" "Export.cpp"   "utils.h" "utils.cpp")
 
@@ -10,5 +12,6 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
 endif()
 
 target_link_libraries(PathTracer PRIVATE glm)
+target_link_libraries(PathTracer PRIVATE OpenMP::OpenMP_CXX)
 
 # TODO: Add tests and install targets if needed.
