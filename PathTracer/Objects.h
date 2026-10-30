@@ -6,6 +6,12 @@
 #include "Ray.h"
 
 
+struct ShadingFrame
+{
+	glm::vec3 x;
+	glm::vec3 y;
+};
+
 struct Material
 {
 	float roughness = 1.0f;
@@ -13,8 +19,11 @@ struct Material
 
 	glm::vec3 emissionColor;
 	glm::vec3 baseColor;
+	glm::vec3 anisoBais = glm::vec3(1, 0, 0);
 
 	glm::vec3 BRDF(glm::vec3 light_dir, glm::vec3 radiance_dir, glm::vec3 n);
+
+	virtual ShadingFrame getFrame(HitInfo hit);
 };
 
 struct HitInfo
@@ -31,6 +40,7 @@ struct HitInfo
 struct Object
 {
 	Material mat;
+	
 	virtual HitInfo getHit(Ray ray) = 0;
 };
 

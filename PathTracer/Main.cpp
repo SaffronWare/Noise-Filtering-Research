@@ -16,6 +16,7 @@ int main()
 	testSphere.position = glm::vec3(0, 0, -3);
 	testSphere.mat.baseColor = glm::vec3(1, 0, 0);
 	testSphere.mat.emissionColor = glm::vec3(1, 0, 0);
+	testSphere.mat.roughness = 0.0f;
 	//testSphere.mat.emissionStrength = 20.0f;
 
 	Plane floorPlane{};

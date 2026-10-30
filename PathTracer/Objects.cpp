@@ -2,6 +2,14 @@
 
 #include "Objects.h"
 
+virtual ShadingFrame Material::getFrame(HitInfo info)
+{
+	ShadingFrame out;
+	out.x = glm::cross(anisoBasis, info.n); // anisotropic Direction
+	out.y = glm::cross(out.x, info.n);
+	return out;
+}
+
 HitInfo Sphere::getHit(Ray ray)
 {
 
