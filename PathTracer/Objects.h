@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <iostream>
 
 #include "Ray.h"
 
@@ -45,6 +46,18 @@ struct Plane : public Object
 {
 	glm::vec3 position;
 	glm::vec3 normal;
+
+	HitInfo getHit(Ray ray) override;
+};
+
+
+struct Rect : public Object
+{
+	glm::vec3 center;
+	glm::vec3 up;
+	glm::vec3 right;
+	glm::vec2 dimensions;
+
 
 	HitInfo getHit(Ray ray) override;
 };

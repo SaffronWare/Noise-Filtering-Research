@@ -16,7 +16,7 @@ int main()
 	testSphere.position = glm::vec3(0, 0, -3);
 	testSphere.mat.baseColor = glm::vec3(1, 0, 0);
 	testSphere.mat.emissionColor = glm::vec3(1, 0, 0);
-	testSphere.mat.emissionStrength = 20.0f;
+	//testSphere.mat.emissionStrength = 20.0f;
 
 	Plane floorPlane{};
 	floorPlane.position = glm::vec3(0, 1.01, 0);
@@ -24,10 +24,21 @@ int main()
 	floorPlane.mat.baseColor = glm::vec3(1, 1, 1);
 	floorPlane.mat.emissionColor = glm::vec3(0, 0, 0);
 
+	Rect lightRect{};
+	lightRect.center = glm::vec3(0, -2.0, -3);
+	lightRect.right = glm::vec3(1, 0, 0);
+	lightRect.up = glm::vec3(0, 0, 1);
+	lightRect.dimensions = glm::vec2(4, 4);
+	
+	lightRect.mat.emissionColor = glm::vec3(1, 1, 1);
+	lightRect.mat.emissionStrength = 100.0f;
+	lightRect.mat.baseColor = glm::vec3(1,0,0);
+	lightRect.mat.roughness = 1.0f;
+
 	
 	scene.objects.push_back(&testSphere);
 	scene.objects.push_back(&floorPlane);
-
+	scene.objects.push_back(&lightRect);
 
 
 	Renderer::config.scene.emplace(&scene);

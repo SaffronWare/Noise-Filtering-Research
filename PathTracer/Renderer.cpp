@@ -27,14 +27,14 @@ glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, unsigned int stepNum)
 {
 	if (stepNum >= Renderer::config.max_steps)
 	{
-		return glm::vec3(0, 0, 0);
+		return glm::vec3(0);
 	}
 
 	HitInfo hit = Renderer::getHit(negIncomingRay);
 
 	if (!hit.hit)
 	{
-		return glm::vec3(0, 0, 0);
+		return glm::vec3(0);
 	}
 
 	if (glm::dot(hit.n, negIncomingRay.direction) > 0)
@@ -42,7 +42,7 @@ glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, unsigned int stepNum)
 		hit.n *= -1.0f;
 	}
 
-	glm::vec3 OutgoingRadiance = hit.mat.emissionColor * hit.mat.emissionStrength;
+	glm::vec3 OutgoingRadiance = glm::vec3(0);
 
 	for (int i = 0; i < Renderer::config.num_samples_per_trace; i++)
 	{
@@ -54,7 +54,7 @@ glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, unsigned int stepNum)
 			* Renderer::getIncomingLight(Ray{ reflected_pos, reflected_dir }, stepNum + 1) * glm::dot(reflected_dir, hit.n);
 	}
 
-	return OutgoingRadiance / (float)Renderer::config.num_samples_per_trace;
+	return OutgoingRadiance / (float)Renderer::config.num_samples_per_trace + hit.mat.emissionColor * hit.mat.emissionStrength;
 }
 
 glm::vec3 Renderer::colorAtUV(glm::vec2 uv)
