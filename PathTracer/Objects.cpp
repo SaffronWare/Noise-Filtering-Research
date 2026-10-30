@@ -6,7 +6,21 @@
 ShadingFrame Material::getFrame(glm::vec3 n)
 {
 	ShadingFrame out;
-	out.x = glm::normalize(glm::cross(anisoBasis, n)); // anisotropic Direction
+	if (glm::length(glm::cross(anisoBasis, n)) <= 0.0001f)
+	{
+		if (glm::length(glm::cross(n, glm::vec3(0, 0, 1))) <= 0.001f)
+		{
+			out.x = glm::cross(n, glm::vec3(1, 0, 0));
+		}
+		else
+		{
+			out.x = glm::cross(n, glm::vec3(0, 0, 1));
+		}
+	}
+	else {
+		out.x = glm::cross(anisoBasis, n); // anisotropic Direction
+	}
+	out.x = glm::normalize(out.x);
 	out.y = glm::normalize(glm::cross(out.x, n));
 	out.z = n;
 	return out;

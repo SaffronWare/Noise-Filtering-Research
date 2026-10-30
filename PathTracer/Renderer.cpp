@@ -80,17 +80,22 @@ Renderer::RenderOutput Renderer::render()
 
 	int output_index = 0;
 
-	glm::vec2 uv;
+
 	float off = 1.0f / (static_cast<float>(Renderer::config.resolution_y));
-	uv.x = -0.5f * off * static_cast<float>(Renderer::config.resolution_x);
-	uv.y = -0.5f;
 
 
-//#pragma omp parallel for collapse(2)
+	float ry = static_cast<float>(Renderer::config.resolution_y);
+	float rx = static_cast<float>(Renderer::config.resolution_x);
+
+
+#pragma omp parallel for collapse(2)
 	for (int j = 0; j < Renderer::config.resolution_y; j++)
 	{
 		for (int i = 0; i < Renderer::config.resolution_x; i++)
 		{
+			glm::vec2 uv = glm::vec2(-0.5f * off * rx + off * i, -0.5f + off * j);
+			int output_index = 3 * i + 3 * Renderer::config.resolution_x * j;
+
 			glm::vec3 incomingLight = glm::vec3();
 			for (int k = 0; k < Renderer::config.num_samples_per_pixel; k++)
 			{
@@ -102,12 +107,10 @@ Renderer::RenderOutput Renderer::render()
 			output.data[output_index] = incomingLight.x;
 			output.data[output_index + 1] = incomingLight.y;
 			output.data[output_index + 2] = incomingLight.z;
-			output_index += 3;
+			//output_index += 3;
 
-			uv.x += off;
 		}
-		uv.y += off;
-		uv.x = -0.5f * off * static_cast<float>(Renderer::config.resolution_x);
+	
 	}
 
 	return output;

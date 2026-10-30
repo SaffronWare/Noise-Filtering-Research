@@ -22,7 +22,7 @@ namespace Renderer
 		float hit_tolerance = 0.001f;
 
 		unsigned int max_steps = 5u;
-		unsigned int num_samples_per_pixel = 50u;
+		unsigned int num_samples_per_pixel = 10u;
 		unsigned int num_samples_per_trace = 1u;
 	};
 
