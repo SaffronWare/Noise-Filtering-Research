@@ -4,7 +4,9 @@
 #include <iostream>
 
 #include "Ray.h"
+//#include "DisneyBrdf.h"
 
+struct DisneyBrdf;
 
 struct ShadingFrame
 {
@@ -23,6 +25,8 @@ struct Material
 	float anisotropic = 0.0f;
 	float mettalic = 0.0f;
 	float specular = 0.0f;
+	float specularTint = 0.0f;
+	
 
 	glm::vec3 emissionColor = glm::vec3();
 	glm::vec3 baseColor = glm::vec3();

@@ -70,9 +70,7 @@ glm::vec3 DisneyBrdf::Metallic()
 
 
 	KS = (1.0f - mat.specularTint) + mat.specularTint * Ctint;
-
 	C0 = mat.specular * R0(clearcoat_eta) * (1 - mat.mettalic) * KS + mat.mettalic * mat.baseColor;
-
 	Fm = C0 + (1.0f - C0)*(pow(1.0f - dot(h, out), 5.0f));
 	Dm = 1.0f / (
 		PI * alphax * alphay * pow((pow(hl.x / alphax, 2.0f) + pow(hl.y / alphay, 2.0f) + pow(hl.z, 2.0f)),1.0f)
