@@ -2,12 +2,18 @@
 
 #include "Objects.h"
 
-virtual ShadingFrame Material::getFrame(HitInfo info)
+ShadingFrame Material::getFrame(glm::vec3 n)
 {
 	ShadingFrame out;
-	out.x = glm::cross(anisoBasis, info.n); // anisotropic Direction
-	out.y = glm::cross(out.x, info.n);
+	out.x = glm::normalize(glm::cross(anisoBasis, n)); // anisotropic Direction
+	out.y = glm::normalize(glm::cross(out.x, n));
+	out.z = n;
 	return out;
+}
+
+glm::vec3 ShadingFrame::toFrame(glm::vec3 v)
+{
+	return glm::vec3(glm::dot(v, x), glm::dot(v, y), glm::dot(v, z));
 }
 
 HitInfo Sphere::getHit(Ray ray)
@@ -99,19 +105,60 @@ HitInfo Rect::getHit(Ray ray)
 
 glm::vec3 Material::BRDF(glm::vec3 lightDir, glm::vec3 irrDir, glm::vec3 n)
 {
+	ShadingFrame frame = getFrame(n);
+
 	glm::vec3 h = glm::normalize(lightDir + irrDir);
 
+
+	// basic diffuse
 	float FD90 = 0.5f + 2 * roughness * glm::pow(glm::abs(glm::dot(irrDir, h)),2.0f);
 
-	float FDin = (1 + (FD90 - 1) * glm::pow(1 - glm::dot(irrDir, n), 5.0f));
-	float FDout = (1 + (FD90 - 1) * glm::pow(1 - glm::dot(lightDir, n), 5.0f));
+	float FDin = 1 + (FD90 - 1) * glm::pow(1 - glm::dot(irrDir, n), 5.0f);
+	float FDout = 1 + (FD90 - 1) * glm::pow(1 - glm::dot(lightDir, n), 5.0f);
 
 	glm::vec3 BaseDiffuse = FDin * FDout * glm::abs(glm::dot(irrDir, n)) * baseColor / std::acosf(-1.0f);
 
+	// subsurface
+	float FSS90 = roughness * glm::pow(glm::dot(h, irrDir), 2.0f);
+	float FSSin = 1 + (FSS90 - 1) * (1 - glm::pow(glm::abs(glm::dot(lightDir, n)), 5.0f));
+	float FSSout = 1 + (FSS90 - 1) * (1 - glm::pow(glm::abs(glm::dot(irrDir, n)), 5.0f));
+
+	glm::vec3 SubsurfaceDiffuse = 1.25f * baseColor * (FSSin * FSSout * (
+		1.0f /
+		(glm::abs(glm::dot(n, irrDir)) + glm::abs(glm::dot(n, lightDir))) -0.5f)
+		 + 0.5f) / std::acosf(-1.0f);
+
+	glm::vec3 Diffuse = (1 - subsurface) * BaseDiffuse + subsurface * SubsurfaceDiffuse;
+
+
+	// Metallic
+
 	glm::vec3 Fm = baseColor + (1.0f - baseColor) * glm::pow(1.0f - glm::dot(irrDir, h), 5.0f);
+
+	glm::vec3 hl = frame.toFrame(h);
+	glm::vec3 irrl = frame.toFrame(irrDir);
+	glm::vec3 lightl = frame.toFrame(lightDir);
+
+	float aspect = std::sqrtf(1.0f - 0.9f * anisotropic);
+	float alphax = std::fmaxf(0.0001f, roughness * roughness / aspect);
+	float alphay = std::fmaxf(0.0001f, roughness * roughness * aspect);
+
+	float Dm = glm::pow((hl.x / alphax), 2.0f) + glm::pow((hl.y / alphay), 2.0f) + glm::pow(hl.z, 2.0f);
+	Dm *= Dm * alphax * alphay * std::acosf(-1.0f);
+	Dm = 1.0f / Dm;
+
+	float lambdain = 1.0f + (glm::pow(lightl.x * alphax, 2.0f) + glm::pow(lightl.y * alphay, 2.0f))/glm::pow(lightl.z, 2.0f);
+	float lambdain = 0.5f * glm::sqrt(lambdain) - 0.5f;
+
+	float lambdaout = 1.0f + (glm::pow(irrl.x * alphax, 2.0f) + glm::pow(irrl.y * alphay, 2.0f)) / glm::pow(irrl.z, 2.0f);
+	float lambdaout = 0.5f * glm::sqrt(lambdain) - 0.5f;
+
+	float Gm = 1.0f / ((1 + lambdain) * (1 + lambdaout));
+
+	glm::vec3 Mettalic = 0.25f * Fm * Dm * Gm / glm::abs(glm::dot(n, lightDir));
 
 
 	
 	//return baseColor;
-	return BaseDiffuse;
+	return (1-mettalic) * Diffuse + mettalic * Mettalic;
 }
