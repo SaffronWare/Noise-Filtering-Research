@@ -88,7 +88,7 @@ Renderer::RenderOutput Renderer::render()
 	float rx = static_cast<float>(Renderer::config.resolution_x);
 
 
-#pragma omp parallel for collapse(2)
+#pragma omp parallel for collapse(2) schedule(guided)
 	for (int j = 0; j < Renderer::config.resolution_y; j++)
 	{
 		for (int i = 0; i < Renderer::config.resolution_x; i++)

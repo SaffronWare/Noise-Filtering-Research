@@ -24,8 +24,10 @@ struct Material
 	float subsurface = 0.0f;
 	float anisotropic = 0.0f;
 	float mettalic = 0.0f;
-	float specular = 0.0f;
-	float specularTint = 0.0f;
+	float specular = 1.0f;
+	float specularTint = 1.0f;
+	float clearcoatGloss = 0.0f;
+	float clearcoat = 0.25f;
 	
 
 	glm::vec3 emissionColor = glm::vec3();

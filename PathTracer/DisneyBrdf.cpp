@@ -17,7 +17,7 @@ glm::vec3 DisneyBrdf::EvaluateBrdf(glm::vec3 inDir, glm::vec3 outDir, glm::vec3 
 
 	Ctint = mat.baseColor / dot(vec3(0.3, 0.6, 0.1), mat.baseColor);
 
-	return (1 - mat.mettalic) * Diffuse() + mat.mettalic * Metallic();
+	return (1 - mat.mettalic) * Diffuse() +  Metallic() + 0.25f * mat.clearcoat * Clearcoat();
 	
 }
 
@@ -28,8 +28,8 @@ float DisneyBrdf::FD(glm::vec3 dir)
 
 glm::vec3 DisneyBrdf::BaseDiffuse()
 {
-	FD90 = 0.5f + 2 * mat.roughness * pow(dot(outDir, h), 2.0f);
-	return mat.baseColor * FD(in) * FD(out) * dot(n, out);
+	FD90 = 0.5f + 2 * mat.roughness * pow(dot(out, h), 2.0f);
+	return mat.baseColor * FD(in) * FD(out) / PI;
 }
 
 float DisneyBrdf::FSS(glm::vec3 dir)
@@ -44,7 +44,7 @@ glm::vec3 DisneyBrdf::SubsurfaceDiffuse()
 		(1.0f /
 			(dot(n, in) + dot(n, out))
 			- 0.5f)
-		+ 0.5f) * dot(n, out) / PI;
+		+ 0.5f)/ PI;
 }
 
 glm::vec3 DisneyBrdf::Diffuse()
@@ -73,14 +73,37 @@ glm::vec3 DisneyBrdf::Metallic()
 	C0 = mat.specular * R0(clearcoat_eta) * (1 - mat.mettalic) * KS + mat.mettalic * mat.baseColor;
 	Fm = C0 + (1.0f - C0)*(pow(1.0f - dot(h, out), 5.0f));
 	Dm = 1.0f / (
-		PI * alphax * alphay * pow((pow(hl.x / alphax, 2.0f) + pow(hl.y / alphay, 2.0f) + pow(hl.z, 2.0f)),1.0f)
+		PI * alphax * alphay * pow((pow(hl.x / alphax, 2.0f) + pow(hl.y / alphay, 2.0f) + pow(hl.z, 2.0f)),2.0f)
 		);
-	return 0.25f * Fm * Dm * Gm / dot(n, in);
+	Gm = G(inl) * G(outl);
+	return 0.25f * Fm * Dm * Gm / dot(n, in) / dot(n,out);
 }
 
 float DisneyBrdf::R0(float ior)
 {
 	return pow((ior - 1.0f) / (ior + 1.0f), 2.0f);
+}
+
+float DisneyBrdf::LambdaC(glm::vec3 fdir)
+{
+	return 0.5f * std::sqrtf(1.0f + (std::powf(0.25f * fdir.x, 2.0f) + std::powf(0.25f * fdir.y, 2.0f)) / (fdir.z * fdir.z)) - 0.5f;
+}
+
+float DisneyBrdf::GC(glm::vec3 fdir)
+{
+	return 1.0f / (1.0f + LambdaC(fdir));
+}
+
+glm::vec3 DisneyBrdf::Clearcoat()
+{
+	alphac = (1.0f - mat.clearcoatGloss) * 0.1f + mat.clearcoatGloss * 0.001f;
+
+	Fc = R0(clearcoat_eta) + (1.0f - R0(clearcoat_eta)) * pow(1 - dot(h, out), 5.0f);
+	Dc = (alphac * alphac - 1.0f) / (
+		PI * std::logf(alphac * alphac) * (1.0f + (alphac * alphac - 1.0f) * hl.z * hl.z)
+		);
+	Gc = GC(in) * GC(out);
+	return glm::vec3(1.0f) * 4.0f * Fc * Dc * Gc / (dot(n, in) * dot(n, out));
 }
 
 

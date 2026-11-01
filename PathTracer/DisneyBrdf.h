@@ -20,8 +20,6 @@ struct DisneyBrdf
 	glm::vec3 inl;
 	glm::vec3 outl;
 
-	glm::vec3 inDir;
-	glm::vec3 outDir;
 
 	float FD90;
 	float FSS90;
@@ -37,6 +35,11 @@ struct DisneyBrdf
 	float Gm;
 	float Dm;
 
+	float alphac;
+	float Gc;
+	float Dc;
+	float Fc;
+
 	float FD(glm::vec3 dir);
 	float FSS(glm::vec3 dir);
 
@@ -46,12 +49,14 @@ struct DisneyBrdf
 	float R0(float ior);
 
 
-
+	float LambdaC(glm::vec3 fdir);
+	float GC(glm::vec3 fdir);
 
 	glm::vec3 BaseDiffuse();
 	glm::vec3 SubsurfaceDiffuse();
 	glm::vec3 Diffuse();
 	glm::vec3 Metallic();
+	glm::vec3 Clearcoat();
 
 	glm::vec3 EvaluateBrdf(glm::vec3 inDir, glm::vec3 outDir, glm::vec3 normal);
 	
