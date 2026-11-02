@@ -21,7 +21,7 @@ namespace Renderer
 
 		float hit_tolerance = 0.001f;
 
-		unsigned int max_steps = 5u;
+		unsigned int max_steps = 10u;
 		unsigned int num_samples_per_pixel = 100u;
 		unsigned int num_samples_per_trace = 1u;
 	};
@@ -45,5 +45,6 @@ namespace Renderer
 	glm::vec3 colorAtUV(glm::vec2 uv);
 
 	RenderOutput render();
+	RenderOutput cumulativeRender(RenderOutput cumulRender, int prevWeight);
 
 }

@@ -50,8 +50,8 @@ glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, unsigned int stepNum)
 		glm::vec3 reflected_dir = Utils::randomOnHemisphere(hit.n);
 		glm::vec3 reflected_pos = hit.p + Renderer::config.hit_tolerance * hit.n;
 
-		OutgoingRadiance += hit.mat.BRDF(reflected_dir, -negIncomingRay.direction, hit.n) 
-			* Renderer::getIncomingLight(Ray{ reflected_pos, reflected_dir }, stepNum + 1) * glm::dot(reflected_dir, hit.n);
+		OutgoingRadiance +=  hit.mat.BRDF(reflected_dir, -negIncomingRay.direction, hit.n) 
+			* Renderer::getIncomingLight(Ray{ reflected_pos, reflected_dir }, stepNum + 1) * glm::dot(reflected_dir, hit.n) / (2.0f * 3.1415926535890f);
 	}
 
 	return OutgoingRadiance / (float)Renderer::config.num_samples_per_trace + hit.mat.emissionColor * hit.mat.emissionStrength;
@@ -61,6 +61,25 @@ glm::vec3 Renderer::colorAtUV(glm::vec2 uv)
 {
 	Ray ray = Renderer::config.scene.value()->camera.shootRay(uv);
 	return Renderer::getIncomingLight(ray, 0u);
+}
+
+
+
+Renderer::RenderOutput Renderer::cumulativeRender(RenderOutput cumulRender, int prevWeight)
+{
+	RenderOutput out = Renderer::render();
+	unsigned int index = 0;
+	for (int j = 0; j < out.resolution_y; j++)
+	{
+		for (int i = 0; i < out.resolution_x; i++)
+		{
+			out.data[index] += prevWeight * cumulRender.data[index];
+			out.data[index + 1] += prevWeight * cumulRender.data[index + 1];
+			out.data[index + 2] += prevWeight * cumulRender.data[index + 2]
+
+			index += 3u;
+		}
+	}
 }
 
 Renderer::RenderOutput Renderer::render()
@@ -101,8 +120,6 @@ Renderer::RenderOutput Renderer::render()
 			{
 				incomingLight += Renderer::colorAtUV(uv);
 			}
-
-			incomingLight = glm::clamp(incomingLight / (float)Renderer::config.num_samples_per_pixel, 0.0f, 1.0f);
 
 			output.data[output_index] = incomingLight.x;
 			output.data[output_index + 1] = incomingLight.y;

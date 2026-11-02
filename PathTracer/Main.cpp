@@ -16,9 +16,10 @@ int main()
 	testSphere.position = glm::vec3(0, 0, -3);
 	testSphere.mat.baseColor = glm::vec3(1, 0, 0);
 	testSphere.mat.emissionColor = glm::vec3(1, 0, 0);
-	testSphere.mat.roughness = 0.4f;
-	testSphere.mat.mettalic = 1.0f;
-	testSphere.mat.specular = 1.0f;
+	testSphere.mat.roughness = 0.2f;
+	testSphere.mat.clearcoatGloss = 1.0f;
+	testSphere.mat.mettalic = 0.0f;
+	testSphere.mat.specular = 0.2f;
 	testSphere.mat.specularTint = 1.0f;
 	//testSphere.mat.emissionStrength = 20.0f;
 
@@ -60,7 +61,7 @@ int main()
 	lightRect.dimensions = glm::vec2(4, 4);
 	
 	lightRect.mat.emissionColor = glm::vec3(1, 1, 1);
-	lightRect.mat.emissionStrength = 30.0f;
+	lightRect.mat.emissionStrength = 300.0f;
 	lightRect.mat.baseColor = glm::vec3(1,0,0);
 	lightRect.mat.roughness = 1.0f;
 
@@ -76,9 +77,8 @@ int main()
 
 
 	Renderer::config.scene.emplace(&scene);
-	
-	Renderer::RenderOutput render1 = Renderer::render();
-	Exporter::RenderToPPM(render1, std::string("C:\\Users\\aryan\\SaffronWare\\Noise-Filtering-Path-Tracing\\PathTracer\image.ppm"));
+	Renderer::RenderOutput render = Renderer::render();
+	Exporter::RenderToPPM(render, std::string("C:\\Users\\aryan\\SaffronWare\\Noise-Filtering-Path-Tracing\\PathTracer\image.ppm"));
 
 
 	return 0;

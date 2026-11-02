@@ -17,9 +17,9 @@ void Exporter::RenderToPPM(Renderer::RenderOutput& render, std::string path)
 		{
 			for (unsigned int i = 0; i < render.resolution_x; i++)
 			{
-				outFile << static_cast<int>(255 * render.data[pixel_start_index]);
-				outFile << " " << static_cast<int>(255 * render.data[pixel_start_index + 1]);
-				outFile << " " << static_cast<int>(255 * render.data[pixel_start_index + 2]);
+				outFile << static_cast<int>(255 * glm::clamp(render.data[pixel_start_index], 0.0f, 1.0f));
+				outFile << " " << static_cast<int>(255 * glm::clamp(render.data[pixel_start_index + 1], 0.0f, 1.0f));
+				outFile << " " << static_cast<int>(255 * glm::clamp(render.data[pixel_start_index + 2], 0.0f, 1.0f));
 				outFile << " ";
 
 				pixel_start_index += 3;
