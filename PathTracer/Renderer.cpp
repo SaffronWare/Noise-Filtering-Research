@@ -73,9 +73,13 @@ Renderer::RenderOutput Renderer::cumulativeRender(RenderOutput cumulRender, int 
 	{
 		for (int i = 0; i < out.resolution_x; i++)
 		{
-			out.data[index] += prevWeight * cumulRender.data[index];
+			out.data[index + 0] += prevWeight * cumulRender.data[index];
 			out.data[index + 1] += prevWeight * cumulRender.data[index + 1];
-			out.data[index + 2] += prevWeight * cumulRender.data[index + 2]
+			out.data[index + 2] += prevWeight * cumulRender.data[index + 2];
+
+			out.data[index + 0] /= (float)prevWeight + 1.0f;
+			out.data[index + 1] /= (float)prevWeight + 1.0f;
+			out.data[index + 2] /= (float)prevWeight + 1.0f;
 
 			index += 3u;
 		}
