@@ -57,7 +57,7 @@ Renderer::RenderOutput Analysis::sampleConvergence(unsigned int max_iter, unsign
 
 			if (SSE < 10e-8f)
 			{
-				outFile << "--------------- RENDER CONVERGED ----------------\n";
+				outFile << "RENDER CONVERGED\n";
 				break;
 			}
 		}

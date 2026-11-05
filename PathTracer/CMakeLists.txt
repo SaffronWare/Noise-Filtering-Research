@@ -1,17 +1,51 @@
-﻿# CMakeList.txt : CMake project for Noise-Filtering-Path-Tracing, include source and define
-# project specific logic here.
-#
+﻿
+cmake_minimum_required(VERSION 3.15)
+
+project(PathTracer LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(PYBIND11_FINDPYTHON ON)
 
 find_package(OpenMP REQUIRED)
+find_package(pybind11 CONFIG REQUIRED)
 
-# Add source to this project's executable.
-add_executable (PathTracer "Main.cpp"  "Ray.h" "Ray.cpp" "Camera.h" "Camera.cpp" "Objects.h" "Objects.cpp" "Scene.h" "Renderer.h" "Renderer.cpp" "Export.h" "Export.cpp"   "utils.h" "utils.cpp" "DisneyBrdf.h" "DisneyBrdf.cpp" "Analysis.h" "Analysis.cpp")
+# Shared rendering engine
+add_library(PathTracerCore STATIC
+    Ray.cpp
+    Camera.cpp
+    Objects.cpp
+    Renderer.cpp
+    Export.cpp
+    utils.cpp
+    DisneyBrdf.cpp
+    Analysis.cpp
+ "Setup.h" "Setup.cpp")
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET PathTracer PROPERTY CXX_STANDARD 20)
-endif()
+target_include_directories(PathTracerCore PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
-target_link_libraries(PathTracer PRIVATE glm)
-target_link_libraries(PathTracer PRIVATE OpenMP::OpenMP_CXX)
+set_target_properties(PathTracerCore PROPERTIES
+    POSITION_INDEPENDENT_CODE ON
+)
 
-# TODO: Add tests and install targets if needed.
+target_link_libraries(PathTracerCore PUBLIC
+    glm
+    OpenMP::OpenMP_CXX
+)
+
+# Standalone C++ application
+add_executable(PathTracer Main.cpp "Setup.h" "Setup.cpp")
+
+target_link_libraries(PathTracer PRIVATE PathTracerCore)
+
+# Python bindings
+pybind11_add_module(PathTracerPy PyInterface.cpp)
+
+target_link_libraries(PathTracerPy PRIVATE PathTracerCore)
+
+set_target_properties(PathTracerPy PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}\\Analysis"
+    LIBRARY_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}\\Analysis"
+)
