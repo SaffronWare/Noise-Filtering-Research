@@ -57,7 +57,7 @@ glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, unsigned int stepNum)
 		
 
 		
-		OutgoingRadiance += Utils::valCheck(toAdd, "RADIANCE ADD STEP");
+		OutgoingRadiance += valCheck(toAdd, "RADIANCE ADD STEP");
 		
 	}
 
