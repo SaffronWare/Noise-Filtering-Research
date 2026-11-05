@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Objects.h"
+#include "utils.h"
 
 constexpr float PI = 3.1415926f;
 constexpr float alphamin = 0.0001f;

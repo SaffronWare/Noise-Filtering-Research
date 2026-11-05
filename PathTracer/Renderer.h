@@ -45,6 +45,6 @@ namespace Renderer
 	glm::vec3 colorAtUV(glm::vec2 uv);
 
 	RenderOutput render();
-	RenderOutput cumulativeRender(RenderOutput cumulRender, int prevWeight);
+	RenderOutput cumulativeRender(const RenderOutput& cumulRender, int prevWeight);
 
 }

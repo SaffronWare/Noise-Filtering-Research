@@ -30,8 +30,8 @@ struct Material
 	float clearcoat = 0.0f;
 	
 
-	glm::vec3 emissionColor = glm::vec3();
-	glm::vec3 baseColor = glm::vec3();
+	glm::vec3 emissionColor = glm::vec3(1.0f);
+	glm::vec3 baseColor = glm::vec3(1.0f);
 	glm::vec3 anisoBasis = glm::vec3(1, 0, 0);
 
 	glm::vec3 BRDF(glm::vec3 light_dir, glm::vec3 radiance_dir, glm::vec3 n);

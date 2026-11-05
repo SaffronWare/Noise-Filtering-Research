@@ -42,16 +42,23 @@ glm::vec3 Renderer::getIncomingLight(Ray negIncomingRay, unsigned int stepNum)
 		hit.n *= -1.0f;
 	}
 
+	if (glm::any(glm::isinf(hit.n)) || glm::any(glm::isnan(hit.n)))
+	{
+		std::cout << "FRAME: NONFINITE NORMAL\n";
+	}
 	glm::vec3 OutgoingRadiance = glm::vec3(0);
 
 	for (int i = 0; i < Renderer::config.num_samples_per_trace; i++)
 	{
-
 		glm::vec3 reflected_dir = Utils::randomOnHemisphere(hit.n);
 		glm::vec3 reflected_pos = hit.p + Renderer::config.hit_tolerance * hit.n;
+		glm::vec3 toAdd =  hit.mat.BRDF(reflected_dir, -negIncomingRay.direction, hit.n) 
+			* Renderer::getIncomingLight(Ray{ reflected_pos, reflected_dir }, stepNum + 1) * glm::dot(reflected_dir, hit.n) * (2.0f * 3.1415926535890f);
+		
 
-		OutgoingRadiance +=  hit.mat.BRDF(reflected_dir, -negIncomingRay.direction, hit.n) 
-			* Renderer::getIncomingLight(Ray{ reflected_pos, reflected_dir }, stepNum + 1) * glm::dot(reflected_dir, hit.n) / (2.0f * 3.1415926535890f);
+		
+		OutgoingRadiance += Utils::valCheck(toAdd, "RADIANCE ADD STEP");
+		
 	}
 
 	return OutgoingRadiance / (float)Renderer::config.num_samples_per_trace + hit.mat.emissionColor * hit.mat.emissionStrength;
@@ -65,14 +72,18 @@ glm::vec3 Renderer::colorAtUV(glm::vec2 uv)
 
 
 
-Renderer::RenderOutput Renderer::cumulativeRender(RenderOutput cumulRender, int prevWeight)
+Renderer::RenderOutput Renderer::cumulativeRender(const RenderOutput& cumulRender, int prevWeight)
 {
 	RenderOutput out = Renderer::render();
-	unsigned int index = 0;
+
+
+#pragma omp parallel for collapse(2) schedule(guided)
 	for (int j = 0; j < out.resolution_y; j++)
 	{
 		for (int i = 0; i < out.resolution_x; i++)
 		{
+			
+			unsigned int index = 3 * i + 3 * j * cumulRender.resolution_x;
 			out.data[index + 0] += prevWeight * cumulRender.data[index];
 			out.data[index + 1] += prevWeight * cumulRender.data[index + 1];
 			out.data[index + 2] += prevWeight * cumulRender.data[index + 2];
@@ -80,10 +91,10 @@ Renderer::RenderOutput Renderer::cumulativeRender(RenderOutput cumulRender, int 
 			out.data[index + 0] /= (float)prevWeight + 1.0f;
 			out.data[index + 1] /= (float)prevWeight + 1.0f;
 			out.data[index + 2] /= (float)prevWeight + 1.0f;
-
-			index += 3u;
 		}
 	}
+
+	return out;
 }
 
 Renderer::RenderOutput Renderer::render()
@@ -119,11 +130,12 @@ Renderer::RenderOutput Renderer::render()
 			glm::vec2 uv = glm::vec2(-0.5f * off * rx + off * i, -0.5f + off * j);
 			int output_index = 3 * i + 3 * Renderer::config.resolution_x * j;
 
-			glm::vec3 incomingLight = glm::vec3();
+			glm::vec3 incomingLight = glm::vec3(0.0f);
 			for (int k = 0; k < Renderer::config.num_samples_per_pixel; k++)
 			{
 				incomingLight += Renderer::colorAtUV(uv);
 			}
+			incomingLight /= (float)(Renderer::config.num_samples_per_pixel);
 
 			output.data[output_index] = incomingLight.x;
 			output.data[output_index + 1] = incomingLight.y;

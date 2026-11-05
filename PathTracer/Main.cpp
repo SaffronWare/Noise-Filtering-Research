@@ -3,6 +3,8 @@
 
 #include "Renderer.h"
 #include "Export.h"
+#include "Analysis.h"
+
 
 int main()
 {
@@ -16,10 +18,10 @@ int main()
 	testSphere.position = glm::vec3(0, 0, -3);
 	testSphere.mat.baseColor = glm::vec3(1, 0, 0);
 	testSphere.mat.emissionColor = glm::vec3(1, 0, 0);
-	testSphere.mat.roughness = 0.2f;
+	testSphere.mat.roughness = 0.1f;
 	testSphere.mat.clearcoatGloss = 1.0f;
-	testSphere.mat.mettalic = 0.0f;
-	testSphere.mat.specular = 0.2f;
+	testSphere.mat.mettalic = 0.4f;
+	testSphere.mat.specular = 1.0f;
 	testSphere.mat.specularTint = 1.0f;
 	//testSphere.mat.emissionStrength = 20.0f;
 
@@ -61,7 +63,7 @@ int main()
 	lightRect.dimensions = glm::vec2(4, 4);
 	
 	lightRect.mat.emissionColor = glm::vec3(1, 1, 1);
-	lightRect.mat.emissionStrength = 300.0f;
+	lightRect.mat.emissionStrength = 1.5f;
 	lightRect.mat.baseColor = glm::vec3(1,0,0);
 	lightRect.mat.roughness = 1.0f;
 
@@ -77,9 +79,12 @@ int main()
 
 
 	Renderer::config.scene.emplace(&scene);
-	Renderer::RenderOutput render = Renderer::render();
-	Exporter::RenderToPPM(render, std::string("C:\\Users\\aryan\\SaffronWare\\Noise-Filtering-Path-Tracing\\PathTracer\image.ppm"));
+	/*Renderer::RenderOutput render = Renderer::render();*/
+	
+	Renderer::RenderOutput converged = Analysis::sampleConvergence(100, 1, "C:\\Users\\aryan\\SaffronWare\\Noise-Filtering-Path-Tracing\\analysis.txt");
+	Exporter::RenderToPPM(converged, std::string("C:\\Users\\aryan\\SaffronWare\\Noise-Filtering-Path-Tracing\\PathTracer\image.ppm"));
 
+	
 
 	return 0;
 }

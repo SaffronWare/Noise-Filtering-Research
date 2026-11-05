@@ -11,55 +11,59 @@ glm::vec3 DisneyBrdf::EvaluateBrdf(glm::vec3 inDir, glm::vec3 outDir, glm::vec3 
 	n = frame.z;
 	h = normalize(inDir + outDir);
 
-	hl = frame.toFrame(h);
-	inl = frame.toFrame(in);
-	outl = frame.toFrame(out);
+	hl = Utils::valCheck(frame.toFrame(h), "H FRAME BRDF");
+	inl = Utils::valCheck(frame.toFrame(in), "IN FRAME BRDF");
+	outl = Utils::valCheck(frame.toFrame(out), "OUT FRAME BRDF");
+
+
 
 	Ctint = mat.baseColor / dot(vec3(0.3, 0.6, 0.1), mat.baseColor);
 
-	return (1 - mat.mettalic) * Diffuse() +  Metallic() + 0.25f * mat.clearcoat * Clearcoat();
+	return Utils::valCheck((1 - mat.mettalic) * Diffuse() +  Metallic() + 0.25f * mat.clearcoat * Clearcoat(), "BRDF RETURN STEP");
 	
 }
 
 float DisneyBrdf::FD(glm::vec3 dir)
 {
-	return 1.0f + (FD90 - 1.0f) * (pow(1.0f - dot(dir, n), 5.0f));
+	 return Utils::valCheck(1.0f + (FD90 - 1.0f) * (pow(1.0f - dot(dir, n), 5.0f)), "FD BRDF STEP");
 }
 
 glm::vec3 DisneyBrdf::BaseDiffuse()
 {
 	FD90 = 0.5f + 2 * mat.roughness * pow(dot(out, h), 2.0f);
-	return mat.baseColor * FD(in) * FD(out) / PI;
+	return Utils::valCheck(mat.baseColor * FD(in) * FD(out) / PI, "BASE DIFFUSE BRDF STEP");
 }
 
 float DisneyBrdf::FSS(glm::vec3 dir)
 {
-	return 1.0f + (FSS90 - 1.0f) * (pow(1.0f - dot(dir, n), 5.0f));
+	return Utils::valCheck(1.0f + (FSS90 - 1.0f) * (pow(1.0f - dot(dir, n), 5.0f)), "FSS BRDF STEP");
 }
 
 glm::vec3 DisneyBrdf::SubsurfaceDiffuse()
 {
 	FSS90 = mat.roughness * pow(dot(h, out), 2.0f);
-	return 1.25f * mat.baseColor * (FSS(in) * FSS(out) *
+	return Utils::valCheck(1.25f * mat.baseColor * (FSS(in) * FSS(out) *
 		(1.0f /
 			(dot(n, in) + dot(n, out))
 			- 0.5f)
-		+ 0.5f)/ PI;
+		+ 0.5f)/ PI, "SUBSURFACE DIFFUSE BRDF STEP");
 }
 
 glm::vec3 DisneyBrdf::Diffuse()
 {
-	return (1 - mat.subsurface) * BaseDiffuse() + mat.subsurface * SubsurfaceDiffuse();
+	return Utils::valCheck((1 - mat.subsurface) * BaseDiffuse() + mat.subsurface * SubsurfaceDiffuse(),
+		"DIFFUSE STEP");
 }
 
 float DisneyBrdf::Lambda(glm::vec3 fdir)
 {
-	return 0.5f * sqrt(1.0f + (pow(fdir.x*alphax, 2.0f) + pow(fdir.y*alphay, 2.0f)) / pow(fdir.z, 2.0f)) - 0.5f;
+	return Utils::valCheck(0.5f * sqrt(1.0f + (pow(fdir.x*alphax, 2.0f) + pow(fdir.y*alphay, 2.0f)) / pow(fdir.z, 2.0f)) - 0.5f,
+		"LAMBDA BRDF STEP");
 }
 
 float DisneyBrdf::G(glm::vec3 fdir)
 {
-	return 1.0f / (1.0f + Lambda(fdir));
+	return Utils::valCheck(1.0f / (1.0f + Lambda(fdir)), "G");
 }
 
 glm::vec3 DisneyBrdf::Metallic()
@@ -76,22 +80,25 @@ glm::vec3 DisneyBrdf::Metallic()
 		PI * alphax * alphay * pow((pow(hl.x / alphax, 2.0f) + pow(hl.y / alphay, 2.0f) + pow(hl.z, 2.0f)),2.0f)
 		);
 	Gm = G(inl) * G(outl);
-	return 0.25f * Fm * Dm * Gm / dot(n, in) / dot(n,out);
+	return Utils::valCheck(0.25f * Fm * Dm * Gm / dot(n, in) / dot(n,out), "METALLIC BRDF STEP");
+
+
 }
 
 float DisneyBrdf::R0(float ior)
 {
-	return pow((ior - 1.0f) / (ior + 1.0f), 2.0f);
+	return Utils::valCheck(pow((ior - 1.0f) / (ior + 1.0f), 2.0f), "R0 STEP");
 }
 
 float DisneyBrdf::LambdaC(glm::vec3 fdir)
 {
-	return 0.5f * std::sqrtf(1.0f + (std::powf(0.25f * fdir.x, 2.0f) + std::powf(0.25f * fdir.y, 2.0f)) / (fdir.z * fdir.z)) - 0.5f;
+	return Utils::valCheck(0.5f * std::sqrtf(1.0f + (std::powf(0.25f * fdir.x, 2.0f) + std::powf(0.25f * fdir.y, 2.0f)) / (fdir.z * fdir.z)) - 0.5f,
+		"LAMBDA C DIFFUSE STEP");
 }
 
 float DisneyBrdf::GC(glm::vec3 fdir)
 {
-	return 1.0f / (1.0f + LambdaC(fdir));
+	return Utils::valCheck(1.0f / (1.0f + LambdaC(fdir)), "GC BRDF STEP");
 }
 
 glm::vec3 DisneyBrdf::Clearcoat()
@@ -103,7 +110,8 @@ glm::vec3 DisneyBrdf::Clearcoat()
 		PI * std::logf(alphac * alphac) * (1.0f + (alphac * alphac - 1.0f) * hl.z * hl.z)
 		);
 	Gc = GC(in) * GC(out);
-	return glm::vec3(1.0f) * 4.0f * Fc * Dc * Gc / (dot(n, in) * dot(n, out));
+	return Utils::valCheck(glm::vec3(1.0f) * 4.0f * Fc * Dc * Gc / (dot(n, in) * dot(n, out)), 
+		"CLEARCOAT BRDF STEP");
 }
 
 
