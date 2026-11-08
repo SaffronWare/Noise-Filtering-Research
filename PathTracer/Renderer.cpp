@@ -1,5 +1,14 @@
 #include "Renderer.h"
 
+
+Renderer::RenderConfig::~RenderConfig()
+{
+	if (scene.has_value())
+	{
+		delete scene.value();
+	}
+}
+
 Renderer::RenderConfig Renderer::config = Renderer::RenderConfig{};
 
 HitInfo Renderer::getHit(Ray ray)

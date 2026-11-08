@@ -24,6 +24,8 @@ namespace Renderer
 		unsigned int max_steps = 10u;
 		unsigned int num_samples_per_pixel = 100u;
 		unsigned int num_samples_per_trace = 1u;
+
+		~RenderConfig();
 	};
 
 	struct RenderOutput

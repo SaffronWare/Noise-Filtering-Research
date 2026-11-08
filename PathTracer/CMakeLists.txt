@@ -20,7 +20,7 @@ add_library(PathTracerCore STATIC
     utils.cpp
     DisneyBrdf.cpp
     Analysis.cpp
- "Setup.h" "Setup.cpp")
+ "Setup.h" "Setup.cpp" "Scene.cpp")
 
 target_include_directories(PathTracerCore PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -36,7 +36,7 @@ target_link_libraries(PathTracerCore PUBLIC
 )
 
 # Standalone C++ application
-add_executable(PathTracer Main.cpp "Setup.h" "Setup.cpp")
+add_executable(PathTracer Main.cpp)
 
 target_link_libraries(PathTracer PRIVATE PathTracerCore)
 

@@ -29,9 +29,9 @@ Renderer::RenderOutput Analysis::sampleConvergence(unsigned int max_iter, unsign
 		Renderer::RenderOutput curr;
 		Renderer::RenderOutput prev = Renderer::render();
 		float SSE = 0.0f;
-		outFile << "-----RENDER ANALYSIS-----\n";
+		outFile << "-----RENDER ANALYSIS-----" << std::endl;
 		outFile << "SPP SSE\n";
-		std::cout << "----ANALYSIS BEGUN---\n";
+		std::cout << "----ANALYSIS BEGUN---" << std::endl;
 
 		std::vector<Renderer::RenderOutput*> pastRenders = {};
 
@@ -41,9 +41,9 @@ Renderer::RenderOutput Analysis::sampleConvergence(unsigned int max_iter, unsign
 			std::cout << "----------------------\n PROGRESS " << 100.0f * i / (float)max_iter << "%" << "\n";
 			outFile << (i +1) * sample_step << " ";
 			curr = Renderer::cumulativeRender(prev, i);
-			std::cout << "COMPUTED RENDER\n";
+			std::cout << "COMPUTED RENDER" << std::endl;
 			SSE = Analysis::ComputeSSE(curr, prev);
-			std::cout << "COMPUTED SSE: " << SSE << "\n";
+			std::cout << "COMPUTED SSE: " << SSE << std::endl;
 
 			Renderer::RenderOutput* toRecord = new Renderer::RenderOutput();
 			toRecord->data = std::move(prev.data);
@@ -57,7 +57,7 @@ Renderer::RenderOutput Analysis::sampleConvergence(unsigned int max_iter, unsign
 
 			if (SSE < 10e-8f)
 			{
-				outFile << "RENDER CONVERGED\n";
+				outFile << "RENDER CONVERGED" << std::endl;
 				break;
 			}
 		}

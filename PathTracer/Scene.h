@@ -9,6 +9,9 @@ struct Scene
 {
 	Camera camera;
 
-	std::vector<Object> objects;
+	std::vector<Object*> objects;
+
+	Scene();
+	~Scene();
 
 };
