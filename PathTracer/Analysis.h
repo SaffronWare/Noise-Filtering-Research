@@ -7,6 +7,7 @@
 #include <stdexcept>
 
 #include "Renderer.h"
+#include "Export.h"
 
 
 

@@ -6,7 +6,12 @@ namespace Utils
 {
 	glm::vec3 randomOnHemisphere(glm::vec3 n)
 	{
-		glm::vec3 v = glm::sphericalRand(1.0f);
+		thread_local std::mt19937 generator(std::random_device{}());
+		thread_local std::normal_distribution<float> gauss(0.0f, 1.0f);
+
+
+
+		glm::vec3 v = glm::normalize(glm::vec3(gauss(generator), gauss(generator),gauss(generator)));
 		if (glm::dot(v, n) > 0)
 		{
 			return v;

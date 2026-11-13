@@ -9,9 +9,17 @@
 #include "Scene.h"
 #include "utils.h"
 
+#define PARALLEL
+
 
 namespace Renderer
 {
+	struct Sample
+	{
+		glm::vec3 direction;
+		float pdf;
+	};
+
 	struct RenderConfig
 	{
 		std::optional<Scene*> scene;
@@ -24,6 +32,8 @@ namespace Renderer
 		unsigned int max_steps = 10u;
 		unsigned int num_samples_per_pixel = 100u;
 		unsigned int num_samples_per_trace = 1u;
+
+		bool importance_sampling = true;
 
 		~RenderConfig();
 	};
@@ -41,6 +51,7 @@ namespace Renderer
 
 	extern RenderConfig config;
 
+	Sample getSample(HitInfo info, glm::vec3 oInDir);
 	HitInfo getHit(Ray ray);
 
 	glm::vec3 getIncomingLight(Ray negIncomingRay, unsigned int stepNum);

@@ -10,7 +10,7 @@ void Setup::Setup()
 
 	Sphere* testSphere = new Sphere{};
 	testSphere->radius = 1.0f;
-	testSphere->position = glm::vec3(0, 0, -3);
+	testSphere->position = glm::vec3(0, 0, -4);
 	testSphere->mat.baseColor = glm::vec3(1, 0, 0);
 	testSphere->mat.emissionColor = glm::vec3(1, 0, 0);
 	testSphere->mat.roughness = 0.1f;
@@ -19,6 +19,16 @@ void Setup::Setup()
 	testSphere->mat.specular = 1.0f;
 	testSphere->mat.specularTint = 1.0f;
 	//testSphere->mat.emissionStrength = 20.0f;
+
+	Sphere* sphere2 = new Sphere{};
+	sphere2->radius = 1.0f;
+	sphere2->position = glm::vec3(2, 1, -3);
+	sphere2->mat.baseColor = glm::vec3(1, 0, 0);
+	sphere2->mat.roughness = 0.0f;
+	sphere2->mat.clearcoat = 0.0f;
+	sphere2->mat.specular = 1.0f;
+	sphere2->mat.mettalic = 1.0f;
+	sphere2->mat.specularTint = 1.0f;
 
 	Plane* floorPlane = new Plane{};
 	floorPlane->position = glm::vec3(0, 1.01, 0);
@@ -64,6 +74,7 @@ void Setup::Setup()
 
 	
 	scene->objects.push_back(testSphere);
+	scene->objects.push_back(sphere2);
 	scene->objects.push_back(floorPlane);
 	scene->objects.push_back(ceilPlane);
 	scene->objects.push_back(leftPlane);

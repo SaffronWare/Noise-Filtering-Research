@@ -1,5 +1,6 @@
 #include "Analysis.h"
 
+
 float Analysis::ComputeSSE(const Renderer::RenderOutput& render, const Renderer::RenderOutput& groundTruth)
 {
 	float SSE =  0.0f;
@@ -57,8 +58,8 @@ Renderer::RenderOutput Analysis::sampleConvergence(unsigned int max_iter, unsign
 
 			if (SSE < 10e-8f)
 			{
-				outFile << "RENDER CONVERGED" << std::endl;
-				break;
+				//outFile << "RENDER CONVERGED" << std::endl;
+				//break;
 			}
 		}
 		outFile << "DONE STEPS\n";
@@ -71,6 +72,8 @@ Renderer::RenderOutput Analysis::sampleConvergence(unsigned int max_iter, unsign
 			output = nullptr;
 			i += 1;
 		}
+
+		Exporter::RenderToPPM(prev, path + "finalRender");
 		
 		return prev;
 

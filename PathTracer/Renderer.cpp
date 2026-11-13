@@ -11,6 +11,35 @@ Renderer::RenderConfig::~RenderConfig()
 
 Renderer::RenderConfig Renderer::config = Renderer::RenderConfig{};
 
+
+Renderer::Sample Renderer::getSample(HitInfo info, glm::vec3 oInDir)
+{
+	if (Renderer::config.importance_sampling)
+	{
+		float met =  info.mat.mettalic;
+		float cl = info.mat.clearcoat;
+		float rf = info.mat.roughness;
+		// since only these two decide how we blend the lo
+		// fbes (1-metallic)diffuse + metallic + clearcot * clearocat;
+		// We want intepolatio to be proportional to be ~0 when metallic 1-metallic is closer to 1, 
+		// And increase as clearcoat goes up
+		// We dont mind diffuse being 0 as it just sends rays in random direction but we dont want all our rasy to ever fully face the clearcoat direction
+		// So i propose the following: 
+		float f0 = 1.0f;
+		float f1 = 10.0f;
+		float f2 = 0.0f;
+		float diffuse_specular_inteprolation = f0 * met +  f1 * cl + f2 * (1.0f - rf);
+		float pdf = 1.0f;
+		glm::vec3 diffSpecDir = glm::normalize(Utils::randomOnHemisphere(info.n) + diffuse_specular_inteprolation * glm::reflect(oInDir, info.n));
+		// We can figure out a way to calculate the pdf of this later lol!
+		// We can also try cosine weighing our randomOnHemisphere later.
+		// Now we also want direct light sampling. Now, we want more dirrect light sampling the more diffuse it is, so this could simply be proportioanl
+		// to 1-metallic.
+		float lightDSdirInterpolationFactor = met;
+	}
+	return Renderer::Sample{ Utils::randomOnHemisphere(info.n), 1.0f / (2.0f * 3.1415926f) };
+}
+
 HitInfo Renderer::getHit(Ray ray)
 {
 	HitInfo bestHit{};
@@ -85,8 +114,9 @@ Renderer::RenderOutput Renderer::cumulativeRender(const RenderOutput& cumulRende
 {
 	RenderOutput out = Renderer::render();
 
-
+#ifdef PARALLEL
 #pragma omp parallel for collapse(2) schedule(guided)
+#endif
 	for (int j = 0; j < out.resolution_y; j++)
 	{
 		for (int i = 0; i < out.resolution_x; i++)
@@ -130,8 +160,9 @@ Renderer::RenderOutput Renderer::render()
 	float ry = static_cast<float>(Renderer::config.resolution_y);
 	float rx = static_cast<float>(Renderer::config.resolution_x);
 
-
-#pragma omp parallel for collapse(2) schedule(guided)
+#ifdef PARALLEL
+	#pragma omp parallel for collapse(2) schedule(guided)
+#endif 
 	for (int j = 0; j < Renderer::config.resolution_y; j++)
 	{
 		for (int i = 0; i < Renderer::config.resolution_x; i++)
