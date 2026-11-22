@@ -14,7 +14,7 @@ int main()
 	Setup::Setup();
 	/*Renderer::RenderOutput render = Renderer::render();*/
 	
-	Renderer::RenderOutput converged = Analysis::sampleConvergence(1, 1, "C:\\Users\\aryan\\SaffronWare\\Noise-Filtering-Path-Tracing\\Analysis\\analysis.txt");
+	Renderer::RenderOutput converged = Analysis::sampleConvergence(4000, 1, "C:\\Users\\aryan\\SaffronWare\\Noise-Filtering-Path-Tracing\\Analysis\\analysis.txt");
 	Exporter::RenderToPPM(converged, std::string("C:\\Users\\aryan\\SaffronWare\\Noise-Filtering-Path-Tracing\\Analysis\\image.ppm"));
 
 	
