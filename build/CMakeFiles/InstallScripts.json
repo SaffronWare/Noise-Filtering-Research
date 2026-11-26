@@ -1,0 +1,11 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/cmake_install.cmake",
+		"C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/_deps/glm-build/cmake_install.cmake",
+		"C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/_deps/glm-build/glm/cmake_install.cmake",
+		"C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/PathTracer/cmake_install.cmake",
+		"C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/CudaIntegration/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

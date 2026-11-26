@@ -25,4 +25,5 @@ FetchContent_MakeAvailable(glm)
 
 
 # Include sub-projects.
-add_subdirectory ("PathTracer")
+add_subdirectory("PathTracer")
+add_subdirectory("CudaIntegration")

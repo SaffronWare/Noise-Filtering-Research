@@ -1,0 +1,10 @@
+C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/_deps/glm-build/CMakeFiles/ALL_BUILD.dir
+C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/_deps/glm-build/glm/CMakeFiles/glm.dir
+C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/PathTracer/CMakeFiles/PathTracerCore.dir
+C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/PathTracer/CMakeFiles/PathTracer.dir
+C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/PathTracer/CMakeFiles/PathTracerPy.dir
+C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/PathTracer/CMakeFiles/ALL_BUILD.dir
+C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/CudaIntegration/CMakeFiles/CudaIntegration.dir
+C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/CudaIntegration/CMakeFiles/ALL_BUILD.dir
