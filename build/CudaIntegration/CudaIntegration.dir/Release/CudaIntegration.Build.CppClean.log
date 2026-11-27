@@ -1,14 +1,11 @@
 cudaintegration.dir\release\main.obj
+cudaintegration.dir\release\render.obj
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cmakefiles\generate.stamp
-c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\release\cudaintegration.exe
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\main.cu.cache
-c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\main.obj
+c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\render.cu.cache
+c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\render.obj
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\cudaintegration.tlog\cudacompile.read.1u.tlog
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\cudaintegration.tlog\cudacompile.write.1u.tlog
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\cudaintegration.tlog\custombuild.command.1.tlog
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\cudaintegration.tlog\custombuild.read.1.tlog
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\cudaintegration.tlog\custombuild.write.1.tlog
-c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\cudaintegration.tlog\link.command.1.tlog
-c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\cudaintegration.tlog\link.read.1.tlog
-c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\cudaintegration.tlog\link.secondary.1.tlog
-c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\cudaintegration.tlog\link.write.1.tlog

@@ -21,6 +21,7 @@
 	</Project>
 	<Project Path="CudaIntegration/CudaIntegration.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="f6dcca83-e1d0-3c1c-865f-fd8f6883a842">
 		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="_deps/glm-build/glm/glm.vcxproj"/>
 	</Project>
 	<Project Path="PathTracer/PathTracer.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="1460831b-5527-3ac5-af7e-b01768e45e4a">
 		<BuildDependency Project="PathTracer/PathTracerCore.vcxproj"/>

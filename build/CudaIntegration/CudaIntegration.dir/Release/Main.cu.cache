@@ -13,7 +13,7 @@ CudaRuntimeType=
 CudaToolkitCustomDir=
 DebugInformationFormat=None
 DebugInformationFormat=None
-Defines=;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release";_MBCS;;CMAKE_INTDIR="Release"
+Defines=;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release";_MBCS;;WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release"
 Emulation=false
 EnableVirtualArchInFatbin=true
 ExtensibleWholeProgramCompilation=false
@@ -24,7 +24,7 @@ GenerateRelocatableDeviceCode=false
 GPUDebugInfo=false
 GPUDebugInfo=false
 HostDebugInfo=false
-Include=
+Include=C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src
 Inputs=
 InterleaveSourceInPTX=false
 Keep=false
@@ -54,5 +54,5 @@ UseHostDefines=true
 UseHostInclude=false
 UseHostLibraryDependencies=
 UseHostLibraryDirectories=
-Warning=W1
-Warning=W1
+Warning=W3
+Warning=W3

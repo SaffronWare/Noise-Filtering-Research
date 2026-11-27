@@ -3,58 +3,67 @@
 #include "device_launch_parameters.h"
 #include <cmath>
 #include <iostream>
+#include "Render.cuh"
+#include "Export.h"
+
+#include "debug.h"
 
 
-__global__ void vecAdd(float* A, float* B, float* C, int length)
+__global__ void renderPassKernel(float* data, RenderConfig config)
 {
-	int index = blockIdx.x * blockDim.x + threadIdx.x;
+	int width = config.width;
+	int height = config.height;
+	int ix = blockIdx.x * blockDim.x + threadIdx.x;
+	int iy = blockIdx.y * blockDim.y + threadIdx.y;
 
-	if (index < length)
+	if (ix < width && iy < height)
 	{
-		C[index] = A[index] + B[index];
+		int widx = ix + iy * height;
+
+		float u = (ix + 1.0f) / (float)(width);
+		float v = (iy + 1.0f) / (float)(height);
+
+
+
+		data[3 * widx + 0] = u;
+		data[3 * widx + 1] = v;
+		data[3 * widx + 2] = 1.0f;
 	}
+}
+
+
+
+
+RenderData render(RenderConfig config)
+{
+	RenderData data{};
+	data.width = config.width;
+	data.height = config.height;
+	data.alloc();
+
+	const static int num_threads_per_block = 16;
+
+	dim3 threads(num_threads_per_block, num_threads_per_block);
+	dim3 blocks((config.width + num_threads_per_block - 1) / num_threads_per_block, 
+		(config.height + num_threads_per_block - 1) / num_threads_per_block);
+
+
+	renderPassKernel<<<blocks,threads>>>(data.data, config);
+
+	CUDA_CHECK(cudaDeviceSynchronize());
+
+
+	return data;
+
 }
 
 int main()
 {
-	int length = 4;
+	RenderConfig config;
+	config.width = 100;
+	config.height = 100;
+	RenderData data = render(config);
 
-	float* A = nullptr;
-	float* B = nullptr;
-	float* C = nullptr;
-
-	cudaMallocManaged(&A, length * sizeof(float));
-	cudaMallocManaged(&B, length * sizeof(float));
-	cudaMallocManaged(&C, length * sizeof(float));
-	A[0] = 1;
-	A[1] = 2;
-	A[2] = 3;
-	A[3] = 4;
-	B[0] = 4;
-	B[1] = 3;
-	B[2] = 2;
-	B[3] = 1;
-	
-
-
-	int threads = 256;
-	int blocks = (length + threads - 1) / threads;
-	vecAdd<<<blocks, 256 >>>(A, B, C, length);
-
-	cudaDeviceSynchronize();
-
-	std::cout << "Launch: "
-		<< cudaGetErrorString(cudaGetLastError()) << "\n";
-
-	std::cout << "Sync: "
-		<< cudaGetErrorString(cudaDeviceSynchronize()) << "\n";
-
-	std::cout << C[0] << " " << C[1] << " " << C[2] << " " << C[3] << "\n";
-
-
-
-	cudaFree(A);
-	cudaFree(B);
-	cudaFree(C);
+	Exporter::RenderToPPM(data, "test.ppm");
 
 }

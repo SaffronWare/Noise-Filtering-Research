@@ -6,4 +6,6 @@ project(CudaIntegration LANGUAGES CUDA)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(CudaIntegration "Main.cu")
+add_executable(CudaIntegration "Main.cu" "Render.cu" "Render.cuh" "Export.cpp" "Export.h" "debug.h")
+
+target_link_libraries(CudaIntegration PUBLIC glm)

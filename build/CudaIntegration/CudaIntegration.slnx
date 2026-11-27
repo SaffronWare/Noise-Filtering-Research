@@ -17,6 +17,10 @@
 	</Project>
 	<Project Path="CudaIntegration.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="f6dcca83-e1d0-3c1c-865f-fd8f6883a842">
 		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="../_deps/glm-build/glm/glm.vcxproj"/>
 	</Project>
 	<Project Path="../ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="ad1ffd89-498f-32f1-8df6-7d34d42cb861"/>
+	<Project Path="../_deps/glm-build/glm/glm.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5d641534-0b8b-377c-ad91-06c89c3b6ff5">
+		<BuildDependency Project="../ZERO_CHECK.vcxproj"/>
+	</Project>
 </Solution>
