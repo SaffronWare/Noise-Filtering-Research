@@ -174,7 +174,7 @@
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\type_vec4.inl">
       <Filter>Core Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\type_vec_simd.inl">
+    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\type_vec4_simd.inl">
       <Filter>Core Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\_features.hpp">
@@ -933,7 +933,7 @@
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\fast_trigonometry.inl">
       <Filter>GTX Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\float_normalize.inl">
+    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\float_notmalize.inl">
       <Filter>GTX Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\functions.inl">
@@ -955,9 +955,6 @@
       <Filter>GTX Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\io.inl">
-      <Filter>GTX Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\iteration.inl">
       <Filter>GTX Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\log_base.inl">
@@ -1039,9 +1036,6 @@
       <Filter>GTX Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\string_cast.inl">
-      <Filter>GTX Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\structured_bindings.inl">
       <Filter>GTX Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\texture.inl">
@@ -1143,9 +1137,6 @@
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\io.hpp">
       <Filter>GTX Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\iteration.hpp">
-      <Filter>GTX Files</Filter>
-    </ClInclude>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\log_base.hpp">
       <Filter>GTX Files</Filter>
     </ClInclude>
@@ -1234,9 +1225,6 @@
       <Filter>GTX Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\string_cast.hpp">
-      <Filter>GTX Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\structured_bindings.hpp">
       <Filter>GTX Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\texture.hpp">

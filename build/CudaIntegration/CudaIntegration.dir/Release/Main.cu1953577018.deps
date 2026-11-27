@@ -55,7 +55,6 @@ C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\emmintrin.h
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\exception
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\fstream
-C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\functional
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\immintrin.h
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\initializer_list
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\intrin.h
@@ -83,7 +82,6 @@ C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\string
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\system_error
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\tmmintrin.h
-C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\tuple
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\typeinfo
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\type_traits
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\use_ansi.h
@@ -168,7 +166,6 @@ C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\include\vector_function
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\include\vector_types.h
 C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\common.hpp
 C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\compute_common.hpp
-C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\compute_vector_decl.hpp
 C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\compute_vector_relational.hpp
 C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\func_common.inl
 C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\func_exponential.inl

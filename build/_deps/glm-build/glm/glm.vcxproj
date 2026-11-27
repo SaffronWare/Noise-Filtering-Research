@@ -392,7 +392,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\type_vec2.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\type_vec3.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\type_vec4.inl" />
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\type_vec_simd.inl" />
+    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\type_vec4_simd.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\_features.hpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\_fixes.hpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\detail\_noise.hpp" />
@@ -645,7 +645,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\fast_exponential.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\fast_square_root.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\fast_trigonometry.inl" />
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\float_normalize.inl" />
+    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\float_notmalize.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\functions.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\gradient_paint.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\handed_coordinate_space.inl" />
@@ -653,7 +653,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\integer.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\intersect.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\io.inl" />
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\iteration.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\log_base.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\matrix_cross_product.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\matrix_decompose.inl" />
@@ -681,7 +680,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\spline.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\std_based_type.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\string_cast.inl" />
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\structured_bindings.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\texture.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\transform.inl" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\transform2.inl" />
@@ -715,7 +713,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\integer.hpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\intersect.hpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\io.hpp" />
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\iteration.hpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\log_base.hpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\matrix_cross_product.hpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\matrix_decompose.hpp" />
@@ -746,7 +743,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\spline.hpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\std_based_type.hpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\string_cast.hpp" />
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\structured_bindings.hpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\texture.hpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\transform.hpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\gtx\transform2.hpp" />

@@ -15,7 +15,7 @@ public:
 
 	Ray shootRay(glm::vec2 uv);
 
-	glm::mat4 getOrientation();
+	glm::mat3 getOrientation();
 	glm::vec3 getFront();
 	glm::vec3 getRight();
 	glm::vec3 getUp();

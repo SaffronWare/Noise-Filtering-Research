@@ -18,16 +18,14 @@ __global__ void renderPassKernel(float* data, RenderConfig config)
 
 	if (ix < width && iy < height)
 	{
-		int widx = ix + iy * height;
+		int widx = ix + iy * width;
 
-		float u = (ix - 0.5f * (width-1)) / (float)(height-1);
-		float v = (float)(iy) / (float)(height-1) - 0.5f;
+		float u = 4.0f * (ix - 0.5f * (width-1)) / (float)(height-1);
+		float v = 4.0f * (float)(iy) / (float)(height-1) - 0.5f;
 
-		ray = config.cam.shootRay(glm::vec2(u, v));
+		ray = config.cam.shootRay(glm::vec2(u,v));
 
-
-
-		data[3 * widx + 0] = u;
+		data[3 * widx + 0] = ray.direction.x;
 		data[3 * widx + 1] = ray.direction.y;
 		data[3 * widx + 2] = ray.direction.z;
 	}

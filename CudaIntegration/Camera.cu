@@ -1,6 +1,6 @@
 #include "Camera.cuh"
 
-__device__ glm::mat4 Camera::getOrientation()
+__device__ glm::mat3 Camera::getOrientation()
 {
 	return orientation;
 }

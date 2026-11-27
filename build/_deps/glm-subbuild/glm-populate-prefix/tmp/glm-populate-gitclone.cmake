@@ -52,13 +52,13 @@ endif()
 
 execute_process(
   COMMAND "C:/Program Files/Git/cmd/git.exe"
-          checkout "1.0.2" --
+          checkout "1.0.1" --
   WORKING_DIRECTORY "C:/Users/aryan/SaffronWare/Noise-Filtering-Path-Tracing/build/_deps/glm-src"
   RESULT_VARIABLE error_code
   ${maybe_show_command}
 )
 if(error_code)
-  message(FATAL_ERROR "Failed to checkout tag: '1.0.2'")
+  message(FATAL_ERROR "Failed to checkout tag: '1.0.1'")
 endif()
 
 set(init_submodules TRUE)
