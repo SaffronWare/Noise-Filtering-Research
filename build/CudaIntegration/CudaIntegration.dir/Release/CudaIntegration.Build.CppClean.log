@@ -1,8 +1,14 @@
 cudaintegration.dir\release\main.obj
 cudaintegration.dir\release\render.obj
+cudaintegration.dir\release\camera.obj
+cudaintegration.dir\release\ray.obj
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cmakefiles\generate.stamp
+c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\camera.cu.cache
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\main.cu.cache
+c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\ray.cu.cache
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\render.cu.cache
+c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\camera.obj
+c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\ray.obj
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\render.obj
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\cudaintegration.tlog\cudacompile.read.1u.tlog
 c:\users\aryan\saffronware\noise-filtering-path-tracing\build\cudaintegration\cudaintegration.dir\release\cudaintegration.tlog\cudacompile.write.1u.tlog

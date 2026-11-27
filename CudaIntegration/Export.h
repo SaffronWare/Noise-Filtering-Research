@@ -10,5 +10,5 @@
 
 namespace Exporter
 {
-	void RenderToPPM(RenderData rd, std::string path);
+	void RenderToPPM(const RenderData& rd, std::string path);
 };

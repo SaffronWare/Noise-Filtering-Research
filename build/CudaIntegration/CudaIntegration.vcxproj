@@ -124,6 +124,7 @@
       <CompileOut>$(IntDir)%(Filename).obj</CompileOut>
       <CudaRuntime>Static</CudaRuntime>
       <GPUDebugInfo>false</GPUDebugInfo>
+      <GenerateRelocatableDeviceCode>true</GenerateRelocatableDeviceCode>
       <Optimization>Od</Optimization>
       <Runtime>MDd</Runtime>
       <RuntimeChecks>RTC1</RuntimeChecks>
@@ -157,8 +158,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <CudaLink>
-      <AdditionalOptions>-forward-unknown-to-host-compiler -Wno-deprecated-gpu-targets </AdditionalOptions>
-      <PerformDeviceLink>false</PerformDeviceLink>
+      <AdditionalOptions>-forward-unknown-to-host-compiler -Wno-deprecated-gpu-targets -D_WINDOWS -Xcompiler=" /GR /EHsc" -Xcompiler="-MDd  -Ob0 -Od /RTC1" -Xcompiler=-ZI</AdditionalOptions>
+      <PerformDeviceLink>true</PerformDeviceLink>
     </CudaLink>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -201,6 +202,7 @@
       <CompileOut>$(IntDir)%(Filename).obj</CompileOut>
       <CudaRuntime>Static</CudaRuntime>
       <GPUDebugInfo>false</GPUDebugInfo>
+      <GenerateRelocatableDeviceCode>true</GenerateRelocatableDeviceCode>
       <Optimization>O2</Optimization>
       <Runtime>MD</Runtime>
       <TargetMachinePlatform>64</TargetMachinePlatform>
@@ -233,8 +235,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <CudaLink>
-      <AdditionalOptions>-forward-unknown-to-host-compiler -Wno-deprecated-gpu-targets </AdditionalOptions>
-      <PerformDeviceLink>false</PerformDeviceLink>
+      <AdditionalOptions>-forward-unknown-to-host-compiler -Wno-deprecated-gpu-targets -D_WINDOWS -Xcompiler=" /GR /EHsc" -Xcompiler="-MD -O2 -Ob2" -DNDEBUG</AdditionalOptions>
+      <PerformDeviceLink>true</PerformDeviceLink>
     </CudaLink>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
@@ -277,6 +279,7 @@
       <CompileOut>$(IntDir)%(Filename).obj</CompileOut>
       <CudaRuntime>Static</CudaRuntime>
       <GPUDebugInfo>false</GPUDebugInfo>
+      <GenerateRelocatableDeviceCode>true</GenerateRelocatableDeviceCode>
       <Optimization>O1</Optimization>
       <Runtime>MD</Runtime>
       <TargetMachinePlatform>64</TargetMachinePlatform>
@@ -309,8 +312,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <CudaLink>
-      <AdditionalOptions>-forward-unknown-to-host-compiler -Wno-deprecated-gpu-targets </AdditionalOptions>
-      <PerformDeviceLink>false</PerformDeviceLink>
+      <AdditionalOptions>-forward-unknown-to-host-compiler -Wno-deprecated-gpu-targets -D_WINDOWS -Xcompiler=" /GR /EHsc" -Xcompiler="-MD -O1 -Ob1" -DNDEBUG</AdditionalOptions>
+      <PerformDeviceLink>true</PerformDeviceLink>
     </CudaLink>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
@@ -352,6 +355,7 @@
       <CompileOut>$(IntDir)%(Filename).obj</CompileOut>
       <CudaRuntime>Static</CudaRuntime>
       <GPUDebugInfo>false</GPUDebugInfo>
+      <GenerateRelocatableDeviceCode>true</GenerateRelocatableDeviceCode>
       <Optimization>O2</Optimization>
       <Runtime>MD</Runtime>
       <TargetMachinePlatform>64</TargetMachinePlatform>
@@ -384,8 +388,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <CudaLink>
-      <AdditionalOptions>-forward-unknown-to-host-compiler -Wno-deprecated-gpu-targets </AdditionalOptions>
-      <PerformDeviceLink>false</PerformDeviceLink>
+      <AdditionalOptions>-forward-unknown-to-host-compiler -Wno-deprecated-gpu-targets -D_WINDOWS -Xcompiler=" /GR /EHsc" -Xcompiler="-MD  -O2 -Ob1" -DNDEBUG -Xcompiler=-ZI</AdditionalOptions>
+      <PerformDeviceLink>true</PerformDeviceLink>
     </CudaLink>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -452,7 +456,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </None>
     <ClCompile Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Export.cpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Export.h" />
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\debug.h" />
+    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\config.h" />
     <CudaCompile Include="..\..\CudaIntegration\Camera.cu" />
     <None Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Camera.cuh">
     </None>

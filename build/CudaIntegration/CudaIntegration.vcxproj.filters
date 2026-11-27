@@ -9,7 +9,7 @@
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Export.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\debug.h">
+    <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,12 @@
 #pragma once
 
+#define GLM_FORCE_CUDA
+#include <iostream>
+#include <cuda.h>
+#include <cuda_runtime.h>
+#include <device_launch_parameters.h>
+#include <glm/glm.hpp>
+
 #define DEBUG
 
 #ifdef DEBUG

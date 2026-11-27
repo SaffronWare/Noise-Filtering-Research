@@ -1,6 +1,6 @@
 #include "Export.h"
 
-void Exporter::RenderToPPM(RenderData render, std::string path)
+void Exporter::RenderToPPM(const RenderData& render, std::string path)
 {
 	std::ofstream outFile(path);
 

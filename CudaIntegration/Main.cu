@@ -1,13 +1,8 @@
-
-#include "cuda_runtime.h"
-#include "device_launch_parameters.h"
+#include "config.h"
 #include <cmath>
 #include <iostream>
 #include "Render.cuh"
 #include "Export.h"
-
-#include "debug.h"
-
 
 
 
@@ -18,18 +13,23 @@ __global__ void renderPassKernel(float* data, RenderConfig config)
 	int ix = blockIdx.x * blockDim.x + threadIdx.x;
 	int iy = blockIdx.y * blockDim.y + threadIdx.y;
 
+	Ray ray;
+
+
 	if (ix < width && iy < height)
 	{
 		int widx = ix + iy * height;
 
-		float u = (ix + 1.0f) / (float)(width);
-		float v = (iy + 1.0f) / (float)(height);
+		float u = (ix - 0.5f * (width-1)) / (float)(height-1);
+		float v = (float)(iy) / (float)(height-1) - 0.5f;
+
+		ray = config.cam.shootRay(glm::vec2(u, v));
 
 
 
 		data[3 * widx + 0] = u;
-		data[3 * widx + 1] = v;
-		data[3 * widx + 2] = 1.0f;
+		data[3 * widx + 1] = ray.direction.y;
+		data[3 * widx + 2] = ray.direction.z;
 	}
 }
 
@@ -38,7 +38,7 @@ __global__ void renderPassKernel(float* data, RenderConfig config)
 
 RenderData render(RenderConfig config)
 {
-	RenderData data{};
+	RenderData data;
 	data.width = config.width;
 	data.height = config.height;
 	data.alloc();
@@ -51,7 +51,7 @@ RenderData render(RenderConfig config)
 
 
 	renderPassKernel<<<blocks,threads>>>(data.data, config);
-
+	CUDA_CHECK(cudaGetLastError());
 	CUDA_CHECK(cudaDeviceSynchronize());
 
 

@@ -1,7 +1,6 @@
 #pragma once
-#include "cuda_runtime.h"
-#include "device_launch_parameters.h"
-#include <glm/glm.hpp>
+
+#include "config.h"
 
 #include "Ray.cuh"
 
@@ -13,8 +12,8 @@ private:
 	glm::mat3 orientation = glm::mat3{glm::vec3(1,0,0), glm::vec3(0,1,0), glm::vec3(0,0,-1)};
 
 public:
-	glm::vec3 position;
-	float focal_length;
+	glm::vec3 position = glm::vec3(0,0,0);
+	float focal_length = 1.0f;
 
 	Camera() = default;
 	~Camera() = default;
