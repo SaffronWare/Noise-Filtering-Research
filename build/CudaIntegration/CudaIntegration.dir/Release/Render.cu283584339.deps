@@ -264,5 +264,7 @@ C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\
 C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\vec3.hpp
 C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\vec4.hpp
 C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\build\_deps\glm-src\glm\vector_relational.hpp
+C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Camera.cuh
 C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\debug.h
+C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Ray.cuh
 C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Render.cuh

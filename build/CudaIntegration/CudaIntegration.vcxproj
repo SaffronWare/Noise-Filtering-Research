@@ -453,6 +453,12 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Export.cpp" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Export.h" />
     <ClInclude Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\debug.h" />
+    <CudaCompile Include="..\..\CudaIntegration\Camera.cu" />
+    <None Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Camera.cuh">
+    </None>
+    <None Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Ray.cuh">
+    </None>
+    <CudaCompile Include="..\..\CudaIntegration\Ray.cu" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

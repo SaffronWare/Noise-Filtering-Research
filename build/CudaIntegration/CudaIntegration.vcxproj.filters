@@ -20,12 +20,20 @@
     <CudaCompile Include="..\..\CudaIntegration\Render.cu">
       <Filter>Source Files</Filter>
     </CudaCompile>
+    <CudaCompile Include="..\..\CudaIntegration\Camera.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="..\..\CudaIntegration\Ray.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Render.cuh" />
+    <None Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Camera.cuh" />
+    <None Include="C:\Users\aryan\SaffronWare\Noise-Filtering-Path-Tracing\CudaIntegration\Ray.cuh" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
