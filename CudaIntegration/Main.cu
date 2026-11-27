@@ -20,8 +20,8 @@ __global__ void renderPassKernel(float* data, RenderConfig config)
 	{
 		int widx = ix + iy * width;
 
-		float u = 4.0f * (ix - 0.5f * (width-1)) / (float)(height-1);
-		float v = 4.0f * (float)(iy) / (float)(height-1) - 0.5f;
+		float u = (ix - 0.5f * (width-1)) / (float)(height-1);
+		float v = (float)(iy) / (float)(height-1) - 0.5f;
 
 		ray = config.cam.shootRay(glm::vec2(u,v));
 

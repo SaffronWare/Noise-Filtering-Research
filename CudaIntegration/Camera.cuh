@@ -13,7 +13,7 @@ private:
 
 public:
 	glm::vec3 position = glm::vec3(0,0,0);
-	float focal_length = 0.5f;
+	float focal_length = 1.0f;
 
 	Camera() = default;
 	~Camera() = default;

@@ -26,3 +26,7 @@ struct RenderConfig
 	int height;
 	Camera cam;
 };
+
+__global__ void renderPassKernel(RenderData* data, RenderConfig config);
+
+RenderData render(RenderConfig config);
