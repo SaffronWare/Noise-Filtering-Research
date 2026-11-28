@@ -16,7 +16,7 @@ int main()
 	std::vector<Sphere> spheres;
 	Sphere test_sphere = Sphere{};
 	test_sphere.position = glm::vec3(0, 0, 2.0f);
-	test_sphere.radius = 0.5f;
+	test_sphere.radius = 1.0f;
 	spheres.push_back(test_sphere);
 	config.scene.Load(spheres, std::vector<Plane>(), std::vector<Rect>());
 

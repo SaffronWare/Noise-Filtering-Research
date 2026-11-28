@@ -58,14 +58,17 @@ __global__ void renderPassKernel(float* data, RenderConfig config)
 
 		glm::vec3 pixel_color = glm::vec3(0);
 
-		//HitInfo currhit;
-		//currhit = config.scene.getHit(ray);
+		HitInfo currhit;
+		currhit = config.scene.getHit(ray);
 
-		//if (currhit.hit)
-		//{
-			//pixel_color = glm::vec3(1, 1, 1);
-		//}
-		//else
+		if (currhit.hit)
+		{
+			pixel_color = glm::vec3(1, 1, 1);
+		}
+		else
+		{
+
+		}
 		
 		data[3 * widx + 0] = pixel_color.x;
 		data[3 * widx + 1] = pixel_color.y;

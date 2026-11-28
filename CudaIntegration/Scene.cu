@@ -53,11 +53,15 @@ void Scene::Load(const std::vector<Sphere>& spheres,  const std::vector<Plane>& 
 	CUDA_CHECK(cudaMallocManaged(&sspheres, sizeof(Sphere) * spheres.size()));
 	CUDA_CHECK(cudaMallocManaged(&splanes, sizeof(Plane) * planes.size()));
 	CUDA_CHECK(cudaMallocManaged(&splanes, sizeof(Plane) * planes.size()));
-	
+
 	n_spheres = spheres.size();
 	n_planes = planes.size();
 	n_rects = rects.size();
+	
 
+	memcpy(sspheres, spheres.data(), n_spheres * sizeof(Sphere));
+	memcpy(splanes, planes.data(), n_planes * sizeof(Plane));
+	memcpy(srects, rects.data(), n_rects * sizeof(Rect));
 }
 
 void Scene::unLoad()
