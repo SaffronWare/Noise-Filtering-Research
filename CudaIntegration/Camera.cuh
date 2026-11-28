@@ -18,13 +18,13 @@ public:
 	Camera() = default;
 	~Camera() = default;
 	
-	__device__ Ray shootRay(glm::vec2 uv);
+	__device__ Ray shootRay(glm::vec2 uv) const;
 
-	__device__ glm::mat3 getOrientation();
-	__device__ glm::vec3 getFront();
-	__device__ glm::vec3 getRight();
-	__device__ glm::vec3 getUp();
-	__device__ glm::vec3 getPixelv(glm::vec2 uv);
+	__device__ glm::mat3 getOrientation() const;
+	__device__ glm::vec3 getFront() const;
+	__device__ glm::vec3 getRight() const ;
+	__device__ glm::vec3 getUp() const;
+	__device__ glm::vec3 getPixelv(glm::vec2 uv) const;
 
 	
 };

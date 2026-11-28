@@ -2,7 +2,30 @@
 
 Scene::~Scene()
 {
-	unLoad();
+	if (owner)
+	{
+		unLoad();
+	}
+}
+Scene::Scene(const Scene& other)
+{
+
+	sspheres = other.sspheres;
+	splanes = other.splanes;
+	srects = other.srects;
+
+	n_spheres = other.n_spheres;
+	n_planes = other.n_planes;
+	n_rects = other.n_rects;
+
+	owner = false;
+}
+
+Scene& Scene::operator=(const Scene& other)
+{
+	*this = other;
+	this->owner = false;
+	return *this;
 }
 
 Scene::Scene(Scene&& other)
@@ -25,7 +48,7 @@ Scene::Scene(Scene&& other)
 
 }
 
-void Scene::Load(std::vector<Sphere> spheres, std::vector<Plane> planes, std::vector<Rect> rects)
+void Scene::Load(const std::vector<Sphere>& spheres,  const std::vector<Plane>& planes, const std::vector<Rect>& rects)
 {
 	CUDA_CHECK(cudaMallocManaged(&sspheres, sizeof(Sphere) * spheres.size()));
 	CUDA_CHECK(cudaMallocManaged(&splanes, sizeof(Plane) * planes.size()));
@@ -63,7 +86,7 @@ void Scene::unLoad()
 	
 }
 
-__device__ HitInfo Scene::getHit(Ray ray)
+__device__ HitInfo Scene::getHit(Ray ray) const
 {
 	HitInfo hit{};
 	hit.hit = false;
@@ -101,7 +124,7 @@ __device__ HitInfo Scene::getHit(Ray ray)
 }
 
 
-__device__ HitInfo Sphere::getHit(Ray ray)
+__device__ HitInfo Sphere::getHit(Ray ray) 
 {
 
 	glm::vec3 diff = (ray.position - position);

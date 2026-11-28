@@ -45,6 +45,7 @@ __global__ void renderPassKernel(float* data, RenderConfig config)
 
 	Ray ray;
 
+	// cannot do recursion anymore ll.
 
 	if (ix < width && iy < height)
 	{
@@ -55,9 +56,20 @@ __global__ void renderPassKernel(float* data, RenderConfig config)
 
 		ray = config.cam.shootRay(glm::vec2(u, v));
 
-		data[3 * widx + 0] = ray.direction.x;
-		data[3 * widx + 1] = ray.direction.y;
-		data[3 * widx + 2] = ray.direction.z;
+		glm::vec3 pixel_color = glm::vec3(0);
+
+		//HitInfo currhit;
+		//currhit = config.scene.getHit(ray);
+
+		//if (currhit.hit)
+		//{
+			//pixel_color = glm::vec3(1, 1, 1);
+		//}
+		//else
+		
+		data[3 * widx + 0] = pixel_color.x;
+		data[3 * widx + 1] = pixel_color.y;
+		data[3 * widx + 2] = pixel_color.z;
 	}
 }
 
@@ -78,7 +90,8 @@ RenderData render(RenderConfig config)
 		(config.height + num_threads_per_block - 1) / num_threads_per_block);
 
 
-	renderPassKernel << <blocks, threads >> > (data.data, config);
+	
+	renderPassKernel <<<blocks, threads>>> (data.data, config);
 	CUDA_CHECK(cudaGetLastError());
 	CUDA_CHECK(cudaDeviceSynchronize());
 

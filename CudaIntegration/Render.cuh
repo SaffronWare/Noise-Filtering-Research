@@ -1,6 +1,9 @@
 #pragma once
 #include "config.h"
 #include "Camera.cuh"
+#include "Scene.cuh"
+
+#define MAX_TRACE_STEPS 5
 
 struct RenderData
 {
@@ -25,6 +28,7 @@ struct RenderConfig
 	int width;
 	int height;
 	Camera cam;
+	Scene scene;
 };
 
 __global__ void renderPassKernel(RenderData* data, RenderConfig config);

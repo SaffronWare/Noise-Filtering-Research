@@ -41,8 +41,8 @@ struct Material
 struct Sphere
 {
 	Material mat;
-	glm::vec3 position;
-	float radius;
+	glm::vec3 position = glm::vec3(0);
+	float radius = 0.0f;
 
 	__device__ HitInfo getHit(Ray ray);
 };
@@ -50,8 +50,8 @@ struct Sphere
 struct Plane
 {
 	Material mat;
-	glm::vec3 position;
-	glm::vec3 normal;
+	glm::vec3 position = glm::vec3(0);
+	glm::vec3 normal = glm::vec3(0);
 
 	__device__ HitInfo getHit(Ray ray);
 };
@@ -59,27 +59,28 @@ struct Plane
 struct Rect
 {
 	Material mat;
-	glm::vec3 center;
-	glm::vec3 up;
-	glm::vec3 right;
-	glm::vec3 dimensions;
+	glm::vec3 center = glm::vec3(0);
+	glm::vec3 up = glm::vec3(0);
+	glm::vec3 right = glm::vec3(0);
+	glm::vec3 dimensions = glm::vec3(0);
 
 	__device__ HitInfo getHit(Ray ray);
 };
 
 struct HitInfo
 {
-	glm::vec3 p;
-	glm::vec3 n;
+	glm::vec3 p = glm::vec3(0);
+	glm::vec3 n = glm::vec3(0);
 
 	Material mat;
 
-	float dist;
-	bool hit;
+	float dist = MAX_HIT_DIST;
+	bool hit = false;
 };
 
 struct Scene
 {
+	bool owner = true;
 	Sphere* sspheres = nullptr;
 	Plane* splanes = nullptr;
 	Rect* srects = nullptr;
@@ -87,14 +88,14 @@ struct Scene
 	int n_planes = 0;
 	int n_rects = 0;
 
-	__host__ void Load(std::vector<Sphere> spheres, std::vector<Plane> planes, std::vector<Rect> rects);
+	__host__ void Load(const std::vector<Sphere>& spheres, const std::vector<Plane>& planes, const std::vector<Rect>& rects);
 	__host__ void unLoad();
 
-	__device__ HitInfo getHit(Ray ray);
+	__device__ HitInfo getHit(Ray ray) const;
 
 	Scene() = default;
 	~Scene();
 	Scene(Scene&& other);
-	Scene(const Scene& other) = delete;
-	Scene& operator=(const Scene& other) = delete;
+	Scene(const Scene& other);
+	Scene& operator=(const Scene& other);
 };
