@@ -111,11 +111,12 @@ RenderData render(RenderConfig config)
 	data.height = config.height;
 	data.alloc();
 
-	const static int num_threads_per_block = 16;
+	const static int num_threads_per_block_x = 32;
+	const static int num_threads_per_block_y = 1;
 
-	dim3 threads(num_threads_per_block, num_threads_per_block);
-	dim3 blocks((config.width + num_threads_per_block - 1) / num_threads_per_block,
-		(config.height + num_threads_per_block - 1) / num_threads_per_block);
+	dim3 threads(num_threads_per_block_x, num_threads_per_block_y);
+	dim3 blocks((config.width + num_threads_per_block_x - 1) / num_threads_per_block_x,
+		(config.height + num_threads_per_block_y - 1) / num_threads_per_block_y);
 
 
 	
