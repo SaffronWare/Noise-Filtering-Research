@@ -1,7 +1,11 @@
 #pragma once
-
+#include <vector>
 #include "config.h"
 #include "Ray.cuh"
+
+#define MAX_HIT_DIST 100
+
+struct HitInfo;
 
 struct ShadingFrame
 {
@@ -9,7 +13,7 @@ struct ShadingFrame
 	glm::vec3 y;
 	glm::vec3 z;
 
-	glm::vec3 toFrame(glm::vec3 v);
+	__device__ glm::vec3 toFrame(glm::vec3 v);
 };
 
 struct Material
@@ -29,9 +33,9 @@ struct Material
 	glm::vec3 baseColor = glm::vec3(1.0f);
 	glm::vec3 anisoBasis = glm::vec3(1, 0, 0);
 
-	glm::vec3 BRDF(glm::vec3 light_dir, glm::vec3 radiance_dir, glm::vec3 n);
+	__device__ glm::vec3 BRDF(glm::vec3 light_dir, glm::vec3 radiance_dir, glm::vec3 n);
 
-	virtual ShadingFrame getFrame(glm::vec3 n);
+	__device__ ShadingFrame getFrame(glm::vec3 n);
 };
 
 struct Sphere
@@ -40,7 +44,7 @@ struct Sphere
 	glm::vec3 position;
 	float radius;
 
-	HitInfo getHit(Ray ray);
+	__device__ HitInfo getHit(Ray ray);
 };
 
 struct Plane
@@ -49,7 +53,7 @@ struct Plane
 	glm::vec3 position;
 	glm::vec3 normal;
 
-	HitInfo getHit(Ray ray);
+	__device__ HitInfo getHit(Ray ray);
 };
 
 struct Rect
@@ -60,8 +64,8 @@ struct Rect
 	glm::vec3 right;
 	glm::vec3 dimensions;
 
-	HitInfo getHit(Ray ray);
-}
+	__device__ HitInfo getHit(Ray ray);
+};
 
 struct HitInfo
 {
@@ -76,17 +80,21 @@ struct HitInfo
 
 struct Scene
 {
-	Sphere* spheres = nullptr;
+	Sphere* sspheres = nullptr;
+	Plane* splanes = nullptr;
+	Rect* srects = nullptr;
 	int n_spheres = 0;
-	
-	__host__ void Load(std::vector<Sphere> spheres);
+	int n_planes = 0;
+	int n_rects = 0;
+
+	__host__ void Load(std::vector<Sphere> spheres, std::vector<Plane> planes, std::vector<Rect> rects);
 	__host__ void unLoad();
 
-	__digital__ HitInfo getHit(Ray ray);
+	__device__ HitInfo getHit(Ray ray);
 
 	Scene() = default;
 	~Scene();
 	Scene(Scene&& other);
 	Scene(const Scene& other) = delete;
 	Scene& operator=(const Scene& other) = delete;
-}
+};
