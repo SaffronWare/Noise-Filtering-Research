@@ -36,12 +36,14 @@ RenderData::RenderData(RenderData&& other)
 
 }
 
-__global__ void renderPassKernel(float* data, RenderConfig config)
+__global__ void renderPassKernel(float* data, RenderConfig config, uint32_t seed)
 {
 	int width = config.width;
 	int height = config.height;
 	int ix = blockIdx.x * blockDim.x + threadIdx.x;
 	int iy = blockIdx.y * blockDim.y + threadIdx.y;
+
+	uint32_t state = 7712985 * seed + 9174512 * ix + 1259230 * iy;
 
 	Ray ray;
 
@@ -59,15 +61,17 @@ __global__ void renderPassKernel(float* data, RenderConfig config)
 		glm::vec3 pixel_color = glm::vec3(0);
 
 		HitInfo currhit;
-		currhit = config.scene.getHit(ray);
-
-		if (currhit.hit)
+		glm::vec3 current_ray_tint = glm::vec3(1); 
+		for (int i = 0; i < MAX_TRACE_STEPS; i++)
 		{
-			pixel_color = glm::vec3(1, 1, 1);
-		}
-		else
-		{
+			currhit = config.scene.getHit(ray);
 
+			glm::vec3 new_dir = randomHemisphere(state, currhit.n);
+
+
+			pixel_color += currhit.mat.emissionColor * currhit.mat.emissionStrength * current_ray_tint; // with recursion, pixelcolor = l0 + c0 * (l1 + c1 * (l2 + c2  l3 +
+
+			current_ray_tint *= currhit.mat.BRDF(new_dir, -ray.direction, currhit.n) * glm::dot(new_dir, currhit.n) * (2.0f * MPI);
 		}
 		
 		data[3 * widx + 0] = pixel_color.x;
@@ -94,7 +98,7 @@ RenderData render(RenderConfig config)
 
 
 	
-	renderPassKernel <<<blocks, threads>>> (data.data, config);
+	renderPassKernel <<<blocks, threads>>> (data.data, config, rand());
 	CUDA_CHECK(cudaGetLastError());
 	CUDA_CHECK(cudaDeviceSynchronize());
 

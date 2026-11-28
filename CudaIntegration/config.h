@@ -7,6 +7,9 @@
 #include <device_launch_parameters.h>
 #include <glm/glm.hpp>
 
+
+#define MPI 3.141592653589793238462643f
+
 #ifndef __CUDACC__
     #define __device__
     #define __host__

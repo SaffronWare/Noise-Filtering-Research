@@ -80,6 +80,8 @@ struct HitInfo
 
 struct Scene
 {
+
+
 	bool owner = true;
 	Sphere* sspheres = nullptr;
 	Plane* splanes = nullptr;

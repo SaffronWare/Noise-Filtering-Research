@@ -2,6 +2,9 @@
 #include "config.h"
 #include "Camera.cuh"
 #include "Scene.cuh"
+#include "CudaRand.cuh"
+
+#include <cstdlib>
 
 #define MAX_TRACE_STEPS 5
 
