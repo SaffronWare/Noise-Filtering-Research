@@ -1,4 +1,5 @@
 #include "Scene.cuh"
+#include "DisneyBrdf.cuh"
 
 Scene::~Scene()
 {
@@ -238,5 +239,7 @@ __device__ ShadingFrame Material::getFrame(glm::vec3 n)
 
 __device__ glm::vec3 Material::BRDF(glm::vec3 i, glm::vec3 o, glm::vec3 n)
 {
-	return 0.5f * baseColor / std::acosf(-1.0f);
+	DisneyBrdf brdf{};
+	brdf.mat = *this;
+	return brdf.EvaluateBrdf(i, o, n);
 }

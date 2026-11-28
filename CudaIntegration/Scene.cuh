@@ -28,6 +28,9 @@ struct Material
 	float clearcoatGloss = 0.0f;
 	float clearcoat = 0.0f;
 
+	
+
+
 
 	glm::vec3 emissionColor = glm::vec3(1.0f);
 	glm::vec3 baseColor = glm::vec3(1.0f);

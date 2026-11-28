@@ -1,13 +1,18 @@
 #pragma once
+
+#include "config.h"
 #include "Scene.cuh"
 
 constexpr float PI = 3.1415926f;
 constexpr float alphamin = 0.0001f;
 constexpr float clearcoat_eta = 1.5f;
 
+#define valCheck(x, ... ) x
+
 
 struct DisneyBrdf
 {
+
 	Material mat;
 	ShadingFrame frame;
 	glm::vec3 in;

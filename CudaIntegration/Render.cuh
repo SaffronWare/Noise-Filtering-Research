@@ -7,6 +7,7 @@
 #include <cstdlib>
 
 #define MAX_TRACE_STEPS 5
+#define STEPS_PER_PASS 1000
 
 struct RenderData
 {

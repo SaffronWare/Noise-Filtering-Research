@@ -63,7 +63,7 @@ __global__ void renderPassKernel(float* data, RenderConfig config, uint32_t seed
 
 		HitInfo currhit;
 		
-		for (int j = 0; j < 1000; j++)
+		for (int j = 0; j < STEPS_PER_PASS; j++)
 		{
 			glm::vec3 current_ray_tint = glm::vec3(1);
 			for (int i = 0; i < MAX_TRACE_STEPS; i++)
@@ -73,6 +73,11 @@ __global__ void renderPassKernel(float* data, RenderConfig config, uint32_t seed
 				if (!currhit.hit)
 				{
 					break;
+				}
+
+				if (glm::dot(currhit.n, ray.direction) > 0.0f)
+				{
+					currhit.n *= -1.0f;
 				}
 
 
@@ -89,7 +94,7 @@ __global__ void renderPassKernel(float* data, RenderConfig config, uint32_t seed
 			}
 			ray = init;
 		}
-		pixel_color /= 100.0f;
+		pixel_color /= (float)(STEPS_PER_PASS);
 		data[3 * widx + 0] = pixel_color.x;
 		data[3 * widx + 1] = pixel_color.y;
 		data[3 * widx + 2] = pixel_color.z;
