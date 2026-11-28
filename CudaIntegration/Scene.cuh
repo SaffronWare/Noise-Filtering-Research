@@ -62,7 +62,7 @@ struct Rect
 	glm::vec3 center = glm::vec3(0);
 	glm::vec3 up = glm::vec3(0);
 	glm::vec3 right = glm::vec3(0);
-	glm::vec3 dimensions = glm::vec3(0);
+	glm::vec2 dimensions = glm::vec2(0);
 
 	__device__ HitInfo getHit(Ray ray);
 };

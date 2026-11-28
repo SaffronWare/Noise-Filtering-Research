@@ -57,23 +57,39 @@ __global__ void renderPassKernel(float* data, RenderConfig config, uint32_t seed
 		float v = (float)(iy) / (float)(height - 1) - 0.5f;
 
 		ray = config.cam.shootRay(glm::vec2(u, v));
+		Ray init = ray;
 
 		glm::vec3 pixel_color = glm::vec3(0);
 
 		HitInfo currhit;
-		glm::vec3 current_ray_tint = glm::vec3(1); 
-		for (int i = 0; i < MAX_TRACE_STEPS; i++)
-		{
-			currhit = config.scene.getHit(ray);
-
-			glm::vec3 new_dir = randomHemisphere(state, currhit.n);
-
-
-			pixel_color += currhit.mat.emissionColor * currhit.mat.emissionStrength * current_ray_tint; // with recursion, pixelcolor = l0 + c0 * (l1 + c1 * (l2 + c2  l3 +
-
-			current_ray_tint *= currhit.mat.BRDF(new_dir, -ray.direction, currhit.n) * glm::dot(new_dir, currhit.n) * (2.0f * MPI);
-		}
 		
+		for (int j = 0; j < 1000; j++)
+		{
+			glm::vec3 current_ray_tint = glm::vec3(1);
+			for (int i = 0; i < MAX_TRACE_STEPS; i++)
+			{
+				currhit = config.scene.getHit(ray);
+
+				if (!currhit.hit)
+				{
+					break;
+				}
+
+
+				glm::vec3 new_dir = randomHemisphere(state, currhit.n);
+
+
+				pixel_color += currhit.mat.emissionColor * currhit.mat.emissionStrength * current_ray_tint; // with recursion, pixelcolor = l0 + c0 * (l1 + c1 * (l2 + c2  l3 +
+
+				current_ray_tint *= currhit.mat.BRDF(new_dir, -ray.direction, currhit.n) * glm::dot(new_dir, currhit.n) * (2.0f * MPI);
+
+				ray.direction = new_dir;
+				ray.position = currhit.p + currhit.n * 0.00001f;
+
+			}
+			ray = init;
+		}
+		pixel_color /= 100.0f;
 		data[3 * widx + 0] = pixel_color.x;
 		data[3 * widx + 1] = pixel_color.y;
 		data[3 * widx + 2] = pixel_color.z;
